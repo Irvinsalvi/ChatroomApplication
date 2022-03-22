@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="725.0" prefWidth="1120.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="725.0" prefWidth="1120.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.SceneController">
    <children>
       <SplitPane dividerPositions="0.4409660107334526" layoutX="460.0" layoutY="237.0" prefHeight="725.0" prefWidth="1120.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -27,7 +27,7 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <TextField fx:id="getUsername" layoutX="122.0" layoutY="305.0" promptText="Username">
+                  <TextField layoutX="122.0" layoutY="305.0" promptText="Username">
                      <font>
                         <Font size="27.0" />
                      </font>
