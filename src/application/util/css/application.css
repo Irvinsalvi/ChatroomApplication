@@ -1,0 +1,19 @@
+.root
+{
+    /*code for later */
+}
+
+.login-left-pane
+{
+   -fx-background-color: #320064; 
+}
+
+.login-right-pane
+{
+    -fx-background-color: white;
+}
+
+.login-split-pane:horizontal
+{
+    
+}
