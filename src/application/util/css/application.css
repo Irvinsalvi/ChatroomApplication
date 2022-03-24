@@ -13,7 +13,14 @@
     -fx-background-color: white;
 }
 
-.login-split-pane:horizontal
+.login-right-pane > .text-field
 {
-    
+    -fx-background-radius: 10px;
+}
+
+.login-right-pane > .button
+{
+   -fx-background-color: #320064;
+   -fx-text-fill: white;
+   -fx-background-radius: 10px;
 }
