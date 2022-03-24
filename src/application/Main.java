@@ -17,6 +17,10 @@ public class Main extends Application {
 			
 			Image icon = new Image(getClass().getResource("util/images/applicationIcon.png").toURI().toString());
 			primaryStage.getIcons().add(icon);
+			
+			String css = this.getClass().getResource("util/css/application.css").toExternalForm();
+			scene.getStylesheets().add(css);
+			
 			primaryStage.setTitle("Chat Room"); //sets the title of the whole window
 			primaryStage.setScene(scene); //sets the scene that you want to the window
 			primaryStage.show(); //shows the window
