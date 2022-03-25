@@ -39,7 +39,7 @@
                         <Font size="27.0" />
                      </font>
                   </PasswordField>
-                  <Button layoutX="245.0" layoutY="425.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="134.0" text="Login">
+                  <Button layoutX="245.0" layoutY="425.0" mnemonicParsing="false" onAction="#login" prefHeight="52.0" prefWidth="134.0" text="Login">
                      <font>
                         <Font size="25.0" />
                      </font>
@@ -49,7 +49,7 @@
                         <Font name="System Bold" size="39.0" />
                      </font>
                   </Label>
-                  <Hyperlink layoutX="220.0" layoutY="657.0" text="Create Account">
+                  <Hyperlink layoutX="220.0" layoutY="657.0" onAction="#createAccountScene" text="Create Account">
                      <font>
                         <Font size="25.0" />
                      </font>
