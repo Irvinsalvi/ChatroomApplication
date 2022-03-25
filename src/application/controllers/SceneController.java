@@ -27,7 +27,7 @@ public class SceneController
 	
 	public void createAccountScene(ActionEvent e) throws IOException
 	{
-		Parent root = FXMLLoader.load(Main.class.getResource("view/CreateAccount.fxml"));
+		root = FXMLLoader.load(Main.class.getResource("view/CreateAccount.fxml"));
 		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
