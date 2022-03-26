@@ -1,0 +1,36 @@
+.root
+{
+    /*code for later */
+}
+
+.login-left-pane
+{
+   -fx-background-color: #320064; 
+}
+
+.login-right-pane
+{
+    -fx-background-color: white;
+}
+
+.login-right-pane > .text-field
+{
+    -fx-background-radius: 10px;
+}
+
+.login-right-pane > .button
+{
+   -fx-background-color: #230046;
+   -fx-text-fill: white;
+   -fx-background-radius: 10px;
+}
+
+.login-right-pane > .button:hover
+{
+   -fx-background-color: #320064;
+}
+
+.login-right-pane > .button:pressed
+{
+   -fx-background-color: #230046;
+}
