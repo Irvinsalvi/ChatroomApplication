@@ -23,6 +23,7 @@ public class SceneController
 		//making sure username field is not empty
 		//user gets connected to server
 		//switching to the next scene if the all the previous methods are met
+
 	}
 	
 	public void createAccountScene(ActionEvent e) throws IOException
@@ -31,8 +32,8 @@ public class SceneController
 		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
+		stage.setResizable(false);
 		stage.show();
-		
 	}
 	
 	

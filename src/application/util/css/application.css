@@ -34,3 +34,26 @@
 {
    -fx-background-color: #230046;
 }
+
+.main-pane
+{
+    -fx-background-color: #320064;
+		-fx-text-fill: white;
+}
+
+.main-pane > .button
+{
+   -fx-background-color: #230046;
+   -fx-text-fill: white;
+   -fx-background-radius: 10px;
+}
+
+.main-pane > .button:hover
+{
+   -fx-background-color: #320064;
+}
+
+.main-pane > .button:pressed
+{
+   -fx-background-color: #230046;
+}
