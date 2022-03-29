@@ -11,6 +11,5 @@ public class SceneController
 		//making sure username field is not empty
 		//user gets connected to server
 		//switching to the next scene if the all the previous methods are met
-		//32131313123123131231231312321312
 	}
 }
