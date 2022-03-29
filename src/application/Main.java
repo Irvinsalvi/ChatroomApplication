@@ -15,8 +15,12 @@ public class Main extends Application {
 			Parent root = FXMLLoader.load(getClass().getResource("view/loginScene.fxml")); //grabs the login scene page to display
 			Scene scene = new Scene(root);
 			
-			Image icon = new Image("util/images/applicationIcon.png");
+			Image icon = new Image(getClass().getResource("util/images/applicationIcon.png").toURI().toString());
 			primaryStage.getIcons().add(icon);
+			
+			String css = this.getClass().getResource("util/css/application.css").toExternalForm(); //just a string which has the path to the css
+			scene.getStylesheets().add(css); //links css file to the login scene fxml
+			
 			primaryStage.setTitle("Chat Room"); //sets the title of the whole window
 			primaryStage.setScene(scene); //sets the scene that you want to the window
 			primaryStage.show(); //shows the window
