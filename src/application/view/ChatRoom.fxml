@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="rootPane" fx:id="rootPane" prefHeight="725.0" prefWidth="1120.0" stylesheets="@../util/css/application.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ChatRoomController">
+<AnchorPane id="rootPane" fx:id="rootPane" prefHeight="725.0" prefWidth="1120.0" stylesheets="@../util/css/application.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.ChatRoomController">
 	<AnchorPane id="svgPane" prefHeight="725.0" prefWidth="1120.0" />
 	<AnchorPane prefHeight="725.0" prefWidth="768.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 		<children>

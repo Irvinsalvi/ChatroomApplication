@@ -1,6 +1,8 @@
 package application.controllers;
 
 
+import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,6 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class ChatRoomController {
+	SceneController switchScene = new SceneController();
 
     @FXML
     private TextArea messageField;
@@ -36,29 +39,34 @@ public class ChatRoomController {
     private ImageView logoutBtn, settingsBtn;
     
     @FXML
-    void leaveChatRoom(MouseEvent event) {
-    	//clear session and show login screen
+    void leaveChatRoom(MouseEvent event) throws IOException {
+    	switchScene.loginFormScene(event);
+    	//TODO clear session 
     }
 
     @FXML
     void openSettingsPane(MouseEvent event) {
-    	//show settings pane or dialog box
+    	System.out.println("open settings button clicked");
+    	//TODO show settings pane or dialog box
     }
 
     @FXML
     void sendMessage(ActionEvent event) {
-    	//send message to server
+    	System.out.println("send message button clicked");
+    	//TODO send message to server and display in thread
     }
     
     @FXML
     void addEmoji(ActionEvent event) {
-    	//add emoji to message field
+    	System.out.println("add emoji button clicked");
+    	//TODO add emoji to message field
 
     }
 
     @FXML
     void addGIF(ActionEvent event) {
-    	//add GIF to message field
+    	System.out.println("add GIF button clicked");
+    	//TODO add GIF to message field
     }
 
 }
