@@ -27,9 +27,12 @@ public class LoginFormController {
 	void onLoginClicked(ActionEvent event) throws IOException {
 		if(validateLogin()) {
 			switchScene.chatRoomScene(event);
-		}else{
-			System.out.println("login failed");
-			//TODO add label field in login UI to output failed login message to client
+		}else if(username.getText().isEmpty() || password.getText().isEmpty()){
+			validationMessage.setText("Username or Password is empty!");
+		}
+		else
+		{
+			validationMessage.setText("Username or Password is incorrect!");
 		}
 	}
 	
@@ -42,8 +45,13 @@ public class LoginFormController {
 	 * validate username and password text fields
 	 */
 	public boolean validateLogin() {
-		return true;
-		//TODO add validation code
+		if(username.getText().toString().equals("admin") && password.getText().toString().equals("password"))
+		{
+			return true;
+		}
+		else
+			return false;
+		
 	}
 	
 	
