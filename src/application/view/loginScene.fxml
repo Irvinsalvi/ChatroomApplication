@@ -29,17 +29,17 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="725.0" prefWidth="685.0" styleClass="login-right-pane">
                <children>
-                  <TextField layoutX="133.0" layoutY="233.0" prefHeight="57.0" prefWidth="378.0" promptText="Username">
+                  <TextField fx:id="username" layoutX="133.0" layoutY="233.0" prefHeight="57.0" prefWidth="378.0" promptText="Username">
                      <font>
                         <Font size="27.0" />
                      </font>
                   </TextField>
-                  <PasswordField layoutX="133.0" layoutY="333.0" prefHeight="57.0" prefWidth="378.0" promptText="Password">
+                  <PasswordField fx:id="password" layoutX="133.0" layoutY="333.0" prefHeight="57.0" prefWidth="378.0" promptText="Password">
                      <font>
                         <Font size="27.0" />
                      </font>
                   </PasswordField>
-                  <Button fx:id="loginBtn" layoutX="245.0" layoutY="425.0" mnemonicParsing="false" onAction="#onLoginClicked" prefHeight="52.0" prefWidth="134.0" text="Login">
+                  <Button fx:id="loginBtn" layoutX="245.0" layoutY="453.0" mnemonicParsing="false" onAction="#onLoginClicked" prefHeight="52.0" prefWidth="134.0" text="Login">
                      <font>
                         <Font size="25.0" />
                      </font>
@@ -54,6 +54,11 @@
                         <Font size="25.0" />
                      </font>
                   </Hyperlink>
+                  <Label fx:id="validationMessage" layoutX="174.0" layoutY="409.0" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
          </children>
