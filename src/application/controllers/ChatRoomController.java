@@ -3,31 +3,47 @@ package application.controllers;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Base64;
+import java.util.ResourceBundle;
 
-public class ChatRoomController {
+import application.model.User;
+
+
+public class ChatRoomController implements Initializable{
 	SceneController switchScene = new SceneController();
-	String name = "McTesting Tester";
-	String room = "";
+	User u;
+	
+	  String name = "";
+	  String status = "";
+	  String room = "";
 
+	  
 	@FXML
 	private TextArea messageField;
 
 	@FXML
-	private Button btnSend, emojiBtn, gifBtn;
+	private Button btnSend, emojiBtn, gifBtn, btn;
 
 	@FXML
 	private AnchorPane svgPane, chatPane, rootPane;
@@ -36,13 +52,21 @@ public class ChatRoomController {
 	private ScrollPane activeUserScroll, scrollPane;
 
 	@FXML
-	private VBox activeUserBox, detailBox;
+	private VBox activeUserBox, detailBox, chatBox;
 
 	@FXML
 	private HBox iconBox;
 
 	@FXML
 	private ImageView logoutBtn, settingsBtn;
+	
+	@FXML
+	private Label loggedInAsName;
+	
+
+    @FXML
+    private TextField messageBubble;
+	
 
 	@FXML
 	void leaveChatRoom(MouseEvent event) throws IOException {
@@ -58,6 +82,7 @@ public class ChatRoomController {
 
 	@FXML
 	boolean sendMessage(ActionEvent event) {
+		String m = messageField.getText();
 		// TODO display in thread
 		System.out.println("send message button clicked");
 		boolean messageStatus = false;
@@ -65,7 +90,7 @@ public class ChatRoomController {
 		try {
 		String toSend = "https://www.robertmorelliworkspace.biz/chat-app/SendComment.php?data="
 				+ new String(Base64.getEncoder().encode(("{ \"Name\": \"" + name + "\", \"Comment\": \""
-						+ messageField.getText() + "\", \"Room\": \"" + room + "\" }").getBytes()));
+						+ m + "\", \"Room\": \"" + room + "\" }").getBytes()));
 		URL url = new URL(toSend);
 		// url object for url purposes
 
@@ -86,12 +111,50 @@ public class ChatRoomController {
 		in.close();
 		con.disconnect();
 		messageStatus =  responseTotal.equals("comment sent");
+		displayMessage(name,m);
+		messageField.clear();
 		}catch(IOException e) {
+			//TODO DISPLAY MESSAGE NOT SENT ERROR 
 			System.out.println("Houston, we have a problem.");
 		}
 		
 		return messageStatus;
 	}
+	
+	public static String[][] getComments(String room) throws IOException {
+		String roomString = new String(Base64.getEncoder().encode(room.getBytes()));
+		URL url = new URL("https://www.robertmorelliworkspace.biz/chat-app/GetComments.php?roomREF="
+				+ ( roomString.length()>20?roomString.substring(0, 20):roomString  ));
+		// url object for url purposes
+
+		HttpURLConnection con = (HttpURLConnection) url.openConnection();
+		con.setRequestMethod("GET");
+
+		con.setDoOutput(true);
+
+		con.setConnectTimeout(5000);
+		con.setReadTimeout(5000);
+
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		StringBuffer content = new StringBuffer();
+		while ((inputLine = in.readLine()) != null) {
+			content.append(inputLine);
+		}
+		String responseTotal = new String(content);
+		int commentNumber = responseTotal.length() - responseTotal.replaceAll(";", "").length() + 1;
+		String[][] responseTable = new String[commentNumber][2];
+		int reponseNumber = 0;
+		for (String s : responseTotal.split(";")) {
+			String[] line = s.split(",");
+			responseTable[reponseNumber][0] = new String(Base64.getDecoder().decode(line[0]));
+			responseTable[reponseNumber++][1] = new String(Base64.getDecoder().decode(line[1]));
+		}
+		in.close();
+		con.disconnect();
+		return responseTable;
+	}
+
 
 	@FXML
 	void addEmoji(ActionEvent event) {
@@ -105,5 +168,73 @@ public class ChatRoomController {
 		System.out.println("add GIF button clicked");
 		// TODO add GIF to message field
 	}
+	
+	public void displayMessage(String username, String message) throws MalformedURLException {
+		
+		HBox incomingMsg = new HBox();
+		incomingMsg.setId("outgoingMsgHBox");
+		chatBox.getChildren().add(incomingMsg);
+		if(u.getUsername().equals(username)) {
+			incomingMsg.setStyle("-fx-alignment:TOP_RIGHT;");
+		}else {
+			incomingMsg.setStyle("-fx-alignment:TOP_LEFT;");
+		}
+		
+		
+		ImageView senderPic = new ImageView();
+		incomingMsg.getChildren().add(senderPic);		
+		
+		VBox messageBox = new VBox();
+		incomingMsg.getChildren().add(messageBox);
+		messageBox.setStyle("-fx-background-color:rgba(0,0,0,0.6);");
+		
+
+		TextArea msg = new TextArea(message);
+		msg.setEditable(false);
+		msg.setId("outgoingMsgBox");
+		
+		
+		Label time = new Label("3:45pm 03/22/2022");
+		time.setStyle("-fx-text-fill:white;");
+		time.setId("outgoingMessageTimestamp");
+		Label senderName = new Label(username);
+		senderName.setId("outgoingMsgName");
+		senderName.setStyle("-fx-text-fill:white;");
+		messageBox.getChildren().add(msg);
+		messageBox.getChildren().add(time);
+		messageBox.getChildren().add(senderName);
+
+	}
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		u = LoginFormController.getUser();
+		name = u.getUsername();
+		loggedInAsName.setText(u.getUsername());
+		String[][] messages = null;
+		scrollPane.setVvalue(1.0);
+		
+		try {
+			messages = getComments("");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		for(int i = 0; i < messages.length; i++) {
+			try {
+				displayMessage(messages[i][0], messages[i][1]);
+				System.out.println(messages[i][0] + " : " + messages[i][1]);
+				System.out.println(i);
+				System.out.println(messages.length);
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+//			messageBubble.appendText(messages[i][0]);
+//			messageBubble.appendText(messages[i++][1]);
+		}
+	}
+
 
 }

@@ -3,6 +3,7 @@ package application.controllers;
 import java.io.IOException;
 
 import application.Main;
+import application.model.User;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
@@ -25,10 +26,10 @@ public class SceneController
 	 * @param e
 	 * @throws IOException
 	 */
-	public void chatRoomScene(ActionEvent e) throws IOException
+	public void chatRoomScene(ActionEvent event) throws IOException
 	{
 		root = FXMLLoader.load(Main.class.getResource("view/ChatRoom.fxml"));
-		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
 		stage.setResizable(false);

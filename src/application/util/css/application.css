@@ -207,11 +207,6 @@
     -fx-background-insets: -25px;
 }
 
-.message{
-    -fx-font-size: 14px;
-    -fx-font-weight: 300;
-}
-
 .text-area .content {
     -fx-background-color: transparent, white, transparent, white;
     -fx-text-alignment: center;
