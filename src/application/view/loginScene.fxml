@@ -29,7 +29,7 @@
                   </Label>
                   <ImageView fitHeight="227.0" fitWidth="237.0" layoutX="110.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../util/images/appicon3.png" />
+                        <Image url="@../util/images/appicon2.png" />
                      </image>
                   </ImageView>
                </children>
