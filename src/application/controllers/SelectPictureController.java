@@ -14,7 +14,7 @@ import javafx.scene.control.Button;
 public class SelectPictureController {
 	
 	SceneController switchScene = new SceneController();
-	String avatarPictures[]=new String[] { "/application/util/images/defaultAvatar.jpg", "/application/util/images/avatarPicture1.png",  "/application/util/images/avatarPicture2.png",  "/application/util/images/avatarPicture3.png" };
+	String avatarPictures[]=new String[] { "src/application/util/images/defaultAvatar.jpg", "src/application/util/images/avatarPicture1.png",  "src/application/util/images/avatarPicture2.png",  "src/application/util/images/avatarPicture3.png" };
 	
 	@FXML
     private Button backBtn;
@@ -35,7 +35,6 @@ public class SelectPictureController {
 	
 	public void displayImage() throws FileNotFoundException {
 		
-		myImageView = new ImageView();
 		FileInputStream input = new FileInputStream("src/application/util/images/avatarPicture1.png");
 		Image myImage = new Image(input);
         System.out.println("Next button pressed");
