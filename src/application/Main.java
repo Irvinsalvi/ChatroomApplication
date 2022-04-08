@@ -15,7 +15,7 @@ public class Main extends Application {
 			Parent root = FXMLLoader.load(getClass().getResource("view/loginScene.fxml")); //grabs the login scene page to display
 			Scene scene = new Scene(root);
 			
-			Image icon = new Image(getClass().getResource("util/images/appicon3.png").toURI().toString());
+			Image icon = new Image(getClass().getResource("util/images/appicon2.png").toURI().toString());
 			primaryStage.getIcons().add(icon);
 			
 			String css = this.getClass().getResource("util/css/application.css").toExternalForm(); //just a string which has the path to the css
