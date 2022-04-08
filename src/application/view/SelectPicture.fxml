@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="404.0" prefWidth="278.0" stylesheets="@../util/css/application.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.SelectPictureController">
+   <children>
+      <ImageView fitHeight="125.0" fitWidth="143.0" layoutX="77.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../util/images/defaultAvatar.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="nextBtn" layoutX="219.0" layoutY="150.0" mnemonicParsing="false" onAction="#onNextBtnClicked" text="Next" />
+      <Button fx:id="backBtn" layoutX="21.0" layoutY="150.0" mnemonicParsing="false" text="Back" />
+      <Button fx:id="confirmBtn" layoutX="68.0" layoutY="293.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="151.0" text="Confirm" />
+   </children>
+</AnchorPane>
