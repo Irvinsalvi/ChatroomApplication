@@ -4,12 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -20,11 +17,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Base64;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import application.model.User;
@@ -83,7 +81,10 @@ public class ChatRoomController implements Initializable{
 	@FXML
 	boolean sendMessage(ActionEvent event) {
 		String m = messageField.getText();
-		// TODO display in thread
+		String pattern = "yyyy-MM-dd HH:mm:ss";
+		SimpleDateFormat simpledateformat = new SimpleDateFormat(pattern);
+		String currTime = simpledateformat.format(new Date());
+
 		System.out.println("send message button clicked");
 		boolean messageStatus = false;
 
@@ -111,7 +112,7 @@ public class ChatRoomController implements Initializable{
 		in.close();
 		con.disconnect();
 		messageStatus =  responseTotal.equals("comment sent");
-		displayMessage(name,m);
+		displayMessage(name,m, currTime);
 		messageField.clear();
 		}catch(IOException e) {
 			//TODO DISPLAY MESSAGE NOT SENT ERROR 
@@ -143,13 +144,14 @@ public class ChatRoomController implements Initializable{
 		}
 		String responseTotal = new String(content);
 		int commentNumber = responseTotal.length() - responseTotal.replaceAll(";", "").length() + 1;
-		String[][] responseTable = new String[commentNumber][2];
-		int reponseNumber = 0;
-		for (String s : responseTotal.split(";")) {
-			String[] line = s.split(",");
-			responseTable[reponseNumber][0] = new String(Base64.getDecoder().decode(line[0]));
-			responseTable[reponseNumber++][1] = new String(Base64.getDecoder().decode(line[1]));
-		}
+		String[][] responseTable = new String[commentNumber][3];
+        int reponseNumber = 0;
+        for (String s : responseTotal.split(";")) {
+            String[] line = s.split(",");
+            responseTable[reponseNumber][0] = new String(Base64.getDecoder().decode(line[0]));
+            responseTable[reponseNumber][1] = new String(Base64.getDecoder().decode(line[1]));
+            responseTable[reponseNumber++][2] = line[2];
+        }
 		in.close();
 		con.disconnect();
 		return responseTable;
@@ -169,7 +171,7 @@ public class ChatRoomController implements Initializable{
 		// TODO add GIF to message field
 	}
 	
-	public void displayMessage(String username, String message) throws MalformedURLException {
+	public void displayMessage(String username, String message, String timestamp) throws MalformedURLException {
 		
 		HBox incomingMsg = new HBox();
 		incomingMsg.setId("outgoingMsgHBox");
@@ -194,7 +196,7 @@ public class ChatRoomController implements Initializable{
 		msg.setId("outgoingMsgBox");
 		
 		
-		Label time = new Label("3:45pm 03/22/2022");
+		Label time = new Label(timestamp);
 		time.setStyle("-fx-text-fill:white;");
 		time.setId("outgoingMessageTimestamp");
 		Label senderName = new Label(username);
@@ -223,8 +225,8 @@ public class ChatRoomController implements Initializable{
 		
 		for(int i = 0; i < messages.length; i++) {
 			try {
-				displayMessage(messages[i][0], messages[i][1]);
-				System.out.println(messages[i][0] + " : " + messages[i][1]);
+				displayMessage(messages[i][0], messages[i][1], messages[i][2]);
+				System.out.println(messages[i][0] + " : " + messages[i][1]+ " : " + messages[i][2]);//
 				System.out.println(i);
 				System.out.println(messages.length);
 			} catch (MalformedURLException e) {
