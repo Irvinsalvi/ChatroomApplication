@@ -27,9 +27,4 @@ public class CreateAccountController {
 	void onCancelAccountBtnClicked(ActionEvent event) throws IOException {
 			switchScene.loginFormScene(event);
 	}
-	
-	@FXML
-	void onSelectPictureBtnClicked(ActionEvent event) throws IOException {
-			switchScene.selectPictureScene(event);
-	}
 }
