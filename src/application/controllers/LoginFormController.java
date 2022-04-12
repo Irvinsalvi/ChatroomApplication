@@ -62,7 +62,7 @@ public class LoginFormController {
 	}
 	
 	private void setUser(String un, String pw) {
-		u = new User(un, pw, "avatar", true, true);
+		u = new User(un, pw, "avatar", true);
 	}
 	
 	public static User getUser() {

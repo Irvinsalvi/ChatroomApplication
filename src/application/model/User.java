@@ -6,16 +6,13 @@ public class User
 	private String username =  "";
 	private String password = "";
 	private String avatar= "";
-	private int  userID;
-	private boolean verified = false;
 	private boolean status = false;
 	
 	//constructor
-	public User(String username, String password, String avatar, boolean verified, boolean status) {
+	public User(String username, String password, String avatar, boolean status) {
 		this.username = username;
 		this.password = password;
 		this.avatar = avatar;
-		this.verified = verified;
 		this.status = status;
 	}
 	
@@ -42,22 +39,6 @@ public class User
 	
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
-	}
-	
-	public int getID() {
-		return userID;
-	}
-	
-	public void setID(int userID) {
-		this.userID = userID;
-	}
-	
-	public boolean isVerified() {
-		return verified;
-	}
-	
-	public void setVerified(boolean verified) {
-		this.verified = verified;
 	}
 	
 	public String getStatus() {
