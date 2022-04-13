@@ -101,7 +101,10 @@
 								<content>
 									<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="250.0">
 										<children>
-											<VBox fx:id="activeUserBox" prefHeight="682.0" prefWidth="250.0" />
+											<VBox fx:id="activeUserBox" prefHeight="682.0" prefWidth="250.0" styleClass="activeUsers" stylesheets="@../util/css/application.css">
+                                    <opaqueInsets>
+                                       <Insets />
+                                    </opaqueInsets></VBox>
 										</children>
 										<cursor>
 											<Cursor fx:constant="DEFAULT" />
