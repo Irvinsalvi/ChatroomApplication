@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
@@ -17,35 +19,66 @@
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="725.0" prefWidth="1120.0" styleClass="main-pane" VBox.vgrow="ALWAYS">
       <children>
             <Polygon fill="WHITE" layoutX="1065.0" layoutY="95.0" points="55.0, 630.0, -1078.0, 636.0, 68.0, -105.0" stroke="BLACK" strokeType="INSIDE" />
-            <Text fill="WHITE" layoutX="359.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create New Account">
+            <Text fill="WHITE" layoutX="320.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create New Account">
                <font>
-                  <Font name="System Bold" size="42.0" />
+                  <Font name="System Bold" size="50.0" />
                </font>
             </Text>
-            <TextField layoutX="110.0" layoutY="195.0" prefHeight="57.0" prefWidth="378.0" />
-            <TextField layoutX="110.0" layoutY="401.0" prefHeight="57.0" prefWidth="378.0" />
-            <Text fill="WHITE" layoutX="41.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" textAlignment="RIGHT">
+            <Text fill="WHITE" layoutX="10.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" textAlignment="RIGHT">
                <font>
                   <Font size="22.0" />
                </font>
             </Text>
-            <Text fill="WHITE" layoutX="5.0" layoutY="325.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" textAlignment="RIGHT">
+            <TextField layoutX="110.0" layoutY="240.0" prefHeight="57.0" prefWidth="378.0">
+               <font>
+                  <Font size="27.0" />
+               </font></TextField>
+            <Label fx:id="usernameBlank" layoutX="110.0" layoutY="305.0" prefHeight="27.0" prefWidth="0.0" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Text fill="WHITE" layoutX="14.0" layoutY="377.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" textAlignment="RIGHT">
                <font>
                   <Font size="22.0" />
                </font>
             </Text>
-            <Text fill="WHITE" layoutX="9.0" layoutY="439.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" textAlignment="RIGHT">
+            <PasswordField fx:id="password" layoutX="110.0" layoutY="340.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="57.0" prefWidth="378.0">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </PasswordField>
+            <Label fx:id="passwordBlank" layoutX="120.0" layoutY="405.0" prefHeight="27.0" prefWidth="0.0" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Text fill="WHITE" layoutX="9.0" layoutY="465.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Confirm Password" textAlignment="RIGHT" wrappingWidth="97.7001953125">
                <font>
                   <Font size="22.0" />
                </font>
             </Text>
-            <Text fill="WHITE" layoutX="5.0" layoutY="524.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Confirm Password" textAlignment="RIGHT" wrappingWidth="97.7001953125">
+            <PasswordField fx:id="confirmPassword" layoutX="110.0" layoutY="440.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="57.0" prefWidth="378.0">
                <font>
-                  <Font size="22.0" />
+                  <Font size="27.0" />
                </font>
-            </Text>
-            <TextField layoutX="110.0" layoutY="288.0" prefHeight="57.0" prefWidth="378.0" />
-            <Button fx:id="createAccountBtn" layoutX="315.0" layoutY="615.0" mnemonicParsing="false" onAction="#onCreateAccountBtnClicked" prefHeight="56.0" prefWidth="173.0" text="Create Account" textFill="WHITE">
+            </PasswordField>
+            <Label fx:id="confirmPasswordBlank" layoutX="120.0" layoutY="505.0" prefHeight="27.0" prefWidth="0.0" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="passwordsDontMatch" layoutX="120.0" layoutY="555.0" prefHeight="27.0" prefWidth="0.0" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="createAccountBtn" layoutX="307.0" layoutY="643.0" mnemonicParsing="false" onAction="#onCreateAccountBtnClicked" prefHeight="56.0" prefWidth="173.0" text="Create Account" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="cancelAccountBtn" layoutX="116.0" layoutY="643.0" mnemonicParsing="false" onAction="#onCancelAccountBtnClicked" prefHeight="56.0" prefWidth="173.0" text="Cancel" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -55,12 +88,6 @@
                   <Image url="@../util/images/avatar-0.png" />
                </image>
             </ImageView>
-            <Button fx:id="cancelAccountBtn" layoutX="110.0" layoutY="615.0" mnemonicParsing="false" onAction="#onCancelAccountBtnClicked" prefHeight="56.0" prefWidth="173.0" text="Cancel" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
-            <TextField layoutX="110.0" layoutY="501.0" prefHeight="57.0" prefWidth="378.0" />
             <ImageView fitHeight="120.0" fitWidth="160.0" layoutX="800.0" layoutY="525.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../util/images/avatar-1.png" />
