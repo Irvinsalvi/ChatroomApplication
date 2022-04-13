@@ -221,3 +221,15 @@
     -fx-padding: 0.25em;
     -fx-shape: "M 0 -3.5 v 7 l 4 -3.5 z"; 
 }
+
+.activeUsers > .label
+{
+    -fx-text-fill: white;
+    -fx-font-size: 25px;
+    -fx-padding: 10px;
+}
+
+.activeUsers
+{
+    -fx-padding: 10px;
+}

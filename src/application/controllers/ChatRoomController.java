@@ -1,9 +1,13 @@
 package application.controllers;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,11 +16,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import server.activeUsers;
+
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -25,12 +34,14 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import application.Main;
 import application.model.User;
 
 
 public class ChatRoomController implements Initializable{
 	SceneController switchScene = new SceneController();
 	User u;
+	activeUsers onlineUsers = new activeUsers();
 	
 	  String name = "";
 	  String status = "";
@@ -236,7 +247,73 @@ public class ChatRoomController implements Initializable{
 //			messageBubble.appendText(messages[i][0]);
 //			messageBubble.appendText(messages[i++][1]);
 		}
+		
+		try
+		{
+			String[][] usersActive = activeUsers.getActiveUsers();
+			
+			for (String[] strings : usersActive)
+			{
+				activeUserBox.getChildren().add(new Label(strings[0]));
+			}
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
-
-
+	
+	/*
+	 * grabs the string number from the array and converts it into the corresponding image
+	 * 
+	 * Still a work in progress...
+	 * 
+	 * @return image that will display in the active users
+	 * 
+	 */
+	public Image getImage(String num) throws FileNotFoundException, URISyntaxException
+	{
+		String imagepath = "";
+		Circle circle = new Circle (50, 50, 25);
+		
+		switch (num)
+		{
+		case "0":
+			imagepath = "@..\\util\\images\\avatar-0.png";
+			break;
+		case "1":
+			imagepath = "@..\\util\\images\\avatar-1.png";
+			break;
+		case "2":
+			imagepath = "@..\\util\\images\\avatar-2.png";
+			break;
+		case "3":
+			imagepath = "@..\\util\\images\\avatar-3.png";
+			break;
+		case "4":
+			imagepath = "@..\\util\\images\\avatar-4.png";
+			break;
+		case "5":
+			imagepath = "../util/images/avatar-5.png";
+			break;
+		case "6":
+			imagepath = "@..\\util\\images\\avatar-6.png";
+			break;
+		case "7":
+			imagepath = "@..\\util\\images\\avatar-7.png";
+			break;
+		case "8":
+			imagepath = "@..\\util\\images\\avatar-8.png";
+			break;
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + num);
+		}
+		
+		Image image = new Image(Main.class.getResource(imagepath).toURI().toString());
+		circle.setFill(new ImagePattern(image));
+		
+		return image;
+		
+		
+	}
+	
 }
