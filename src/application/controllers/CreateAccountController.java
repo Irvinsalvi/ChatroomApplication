@@ -3,6 +3,7 @@ package application.controllers;
 import java.io.IOException;
 
 import application.model.User;
+import application.model.userHolder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -45,9 +46,13 @@ public class CreateAccountController {
     
 	@FXML
 	void onCreateAccountBtnClicked(ActionEvent event) throws IOException {
-		System.out.println(username.getText().toString());
+//		System.out.println(username.getText().toString());
 		if(validateCreateAccount()) {
-			setUser(username.getText(), password.getText());
+
+			u = new User(username.getText(), password.getText(), "1", true);	
+			userHolder holder = (userHolder) userHolder.getInstance();
+			holder.setUser(u);
+			
 			switchScene.chatRoomScene(event);
 		}else if(username.getText().isEmpty()){
 			usernameBlank.setText("Username field cannot be empty!");
@@ -70,15 +75,11 @@ public class CreateAccountController {
 	}
 	
 	public boolean validateCreateAccount() {
-		if(username.getText().isEmpty() == false && password.getText().isEmpty() == false && confirmPassword.getText().isEmpty() == false)
+		if(!username.getText().isEmpty() && !password.getText().isEmpty() && !confirmPassword.getText().isEmpty())
 		{
 			return true;
 		}
 		else
 			return false;	
-	}
-	
-	private void setUser(String un, String pw) {
-		u = new User(un, pw, "avatar", true, true);
 	}
 }

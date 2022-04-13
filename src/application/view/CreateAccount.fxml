@@ -29,7 +29,7 @@
                   <Font size="22.0" />
                </font>
             </Text>
-            <TextField layoutX="110.0" layoutY="240.0" prefHeight="57.0" prefWidth="378.0">
+            <TextField fx:id="username" layoutX="110.0" layoutY="240.0" prefHeight="57.0" prefWidth="378.0">
                <font>
                   <Font size="27.0" />
                </font></TextField>
