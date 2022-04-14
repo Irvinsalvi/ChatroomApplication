@@ -35,7 +35,7 @@ public class LoginFormController {
 	@FXML
 	void onLoginClicked(ActionEvent event) throws IOException, URISyntaxException, InterruptedException {
 		if(chatmessager.Login(username.getText(), password.getText())) {
-			u = new User(username.getText(), password.getText(), "1", true);
+			u = new User(username.getText(), password.getText(), 0, true);
 			userHolder holder = (userHolder) userHolder.getInstance();
 			holder.setUser(u);
 			

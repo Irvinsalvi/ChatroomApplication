@@ -83,10 +83,7 @@ public class CreateAccountController {
 		
 		if(validateCreateAccount()) {
 			selectCurrentPicture();
-			Integer selection = currentPicture;
-			String finalPicture = selection.toString();
-			System.out.println(finalPicture);
-			u = new User(username.getText(), password.getText(), finalPicture, true);	
+			u = new User(username.getText(), password.getText(), currentPicture, true);	
 			userHolder holder = (userHolder) userHolder.getInstance();
 			holder.setUser(u);
 			switchScene.chatRoomScene(event);

@@ -5,11 +5,11 @@ public class User
 	//fields
 	private String username =  "";
 	private String password = "";
-	private String avatar= "";
+	private int avatar;
 	private boolean status = false;
 	
 	//constructor
-	public User(String username, String password, String avatar, boolean status) {
+	public User(String username, String password, int avatar, boolean status) {
 		this.username = username;
 		this.password = password;
 		this.avatar = avatar;
@@ -33,11 +33,11 @@ public class User
 		this.password = password;
 	}
 	
-	public String getAvatar() {
+	public int getAvatar() {
 		return avatar;
 	}
 	
-	public void setAvatar(String avatar) {
+	public void setAvatar(int avatar) {
 		this.avatar = avatar;
 	}
 	
