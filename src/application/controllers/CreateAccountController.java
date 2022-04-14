@@ -9,18 +9,49 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
 public class CreateAccountController {
 	
 	SceneController switchScene = new SceneController();
+	
 	public static User u;
+	
+	private int currentPicture;
 	
 	@FXML
     private Button createAccountBtn;
 	
 	@FXML
     private Button cancelAccountBtn;
+	
+	@FXML
+	private RadioButton button0;
+	
+	@FXML
+	private RadioButton button1;
+	
+	@FXML
+	private RadioButton button2;
+	
+	@FXML
+	private RadioButton button3;
+	
+	@FXML
+	private RadioButton button4;
+	
+	@FXML
+	private RadioButton button5;
+	
+	@FXML
+	private RadioButton button6;
+	
+	@FXML
+	private RadioButton button7;
+	
+	@FXML
+	private RadioButton button8;
 	
 	@FXML
     private TextField username;
@@ -43,7 +74,6 @@ public class CreateAccountController {
     @FXML
     private Label passwordsDontMatch;
     
-    
 	@FXML
 	void onCreateAccountBtnClicked(ActionEvent event) throws IOException {
 		passwordsDontMatch.setText("");
@@ -52,12 +82,51 @@ public class CreateAccountController {
 		confirmPasswordBlank.setText("");
 		
 		if(validateCreateAccount()) {
-
-			u = new User(username.getText(), password.getText(), "1", true);	
+			selectCurrentPicture();
+			Integer selection = currentPicture;
+			String finalPicture = selection.toString();
+			System.out.println(finalPicture);
+			u = new User(username.getText(), password.getText(), finalPicture, true);	
 			userHolder holder = (userHolder) userHolder.getInstance();
 			holder.setUser(u);
 			switchScene.chatRoomScene(event);
-		}if(username.getText().isEmpty()){
+		}
+		checkTextFields();
+	}
+
+	private void selectCurrentPicture() {
+		if(button0.isSelected() == true) {
+			currentPicture = 0;
+		}
+		if(button1.isSelected() == true) {
+			currentPicture = 1;
+		}
+		if(button2.isSelected() == true) {
+			currentPicture = 2;
+		}
+		
+		if(button3.isSelected() == true) {
+			currentPicture = 3;
+		}
+		if(button4.isSelected() == true) {
+			currentPicture = 4;
+		}
+		if(button5.isSelected() == true) {
+			currentPicture = 5;
+		}
+		if(button6.isSelected() == true) {
+			currentPicture = 6;
+		}
+		if(button7.isSelected() == true) {
+			currentPicture = 7;
+		}
+		if(button8.isSelected() == true) {
+			currentPicture = 8;
+		}
+	}
+
+	private void checkTextFields() {
+		if(username.getText().isEmpty()){
 			usernameBlank.setText("Username field cannot be empty!");
 		}if(password.getText().isEmpty()){
 			passwordBlank.setText("Password field cannot be empty!");
