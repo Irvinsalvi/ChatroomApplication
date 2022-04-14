@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,6 +23,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.util.Duration;
 import server.activeUsers;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -46,16 +48,16 @@ public class ChatRoomController implements Initializable {
 	private TextArea messageField;
 
 	@FXML
-	private Button btnSend, emojiBtn, gifBtn, btn;
+	private Button btnSend, emojiBtn, gifBtn, btn, avatarBtn, usernameBtn, passwordBtn;
 
 	@FXML
-	private AnchorPane svgPane, chatPane, rootPane;
+	private AnchorPane svgPane, chatPane, rootPane, pane1, pane2, settingsPane;
 
 	@FXML
 	private ScrollPane activeUserScroll, scrollPane;
 
 	@FXML
-	private VBox activeUserBox, detailBox, chatBox;
+	private VBox activeUserBox, detailBox, chatBox, avatarBox, usernameBox, passwordBox;
 
 	@FXML
 	private HBox iconBox;
@@ -64,7 +66,7 @@ public class ChatRoomController implements Initializable {
 	private ImageView logoutBtn, settingsBtn;
 
 	@FXML
-	private Label loggedInAsName;
+	private Label loggedInAsName, currentUser;
 
 	@FXML
 	private TextField messageBubble;
@@ -79,6 +81,28 @@ public class ChatRoomController implements Initializable {
 	void openSettingsPane(MouseEvent event) {
 		System.out.println("open settings button clicked");
 		// TODO show settings pane or dialog box
+		
+		//slide animation
+		TranslateTransition slide = new TranslateTransition();
+		slide.setDuration(Duration.millis(350));
+		slide.setNode(pane2);
+
+		//Open settings pane
+		if (!pane1.isVisible()) {
+			pane1.setVisible(true);
+			slide.setByY(+1000);
+			slide.play();
+		}
+		
+		//close settings pane
+		else {
+			pane1.setVisible(false);
+			slide.setByY(-1000);
+			slide.play();
+
+			//close all open settings tabs
+	    	closeAll();
+		}
 	}
 
 	@FXML
@@ -207,6 +231,69 @@ public class ChatRoomController implements Initializable {
 		messageBox.getChildren().add(senderName);
 
 	}
+	
+    @FXML
+    void openChangeAvatar(MouseEvent event) {
+    	slide(avatarBox);
+    }
+
+    @FXML
+    void openChangePassword(MouseEvent event) {
+    	slide(passwordBox);
+
+    }
+
+    @FXML
+    void openChangeUsername(MouseEvent event) {
+    	slide(usernameBox);
+
+    }
+
+    //slide animations for settings tabs
+    public void slide(VBox box) {
+    	TranslateTransition slide = new TranslateTransition();
+		slide.setDuration(Duration.millis(350));
+		slide.setNode(box);
+
+		if(!box.isVisible()) {
+			closeAll();
+
+			settingsPane.setVisible(true);
+			box.setVisible(true);
+			slide.setByY(1000);
+			slide.play();
+		}
+		else {
+			slide.setNode(box);
+			slide.setByY(-1000);
+			slide.play();
+			box.setVisible(false);
+			settingsPane.setVisible(false);
+		}
+    }
+
+    //closes all open settings tabs
+    public void closeAll() {
+    	TranslateTransition closeAll = new TranslateTransition();
+		closeAll.setDuration(Duration.millis(350));
+		if(settingsPane.isVisible()) {
+			if(avatarBox.isVisible()) {
+				closeAll.setNode(avatarBox);
+				avatarBox.setVisible(false);
+			}
+			else if (usernameBox.isVisible()) {
+				closeAll.setNode(usernameBox);
+				usernameBox.setVisible(false);
+			}
+			else if (passwordBox.isVisible()) {
+				closeAll.setNode(passwordBox);
+				passwordBox.setVisible(false);
+			}
+			settingsPane.setVisible(false);
+		}
+		closeAll.setByY(-1000);
+		closeAll.play();
+    }
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -214,6 +301,7 @@ public class ChatRoomController implements Initializable {
 		u = holder.getUser();
 		name = u.getUsername();
 		loggedInAsName.setText(name);
+		currentUser.setText(u.getUsername());
 
 		String[][] messages = null;
 
@@ -246,6 +334,32 @@ public class ChatRoomController implements Initializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		//Settings Pane: move all off-screen
+		pane1.setVisible(false);
+		TranslateTransition slide = new TranslateTransition();
+		slide.setDuration(Duration.millis(350));
+		slide.setNode(pane2);
+		slide.setByY(-1000);
+		slide.play();
+
+		TranslateTransition setAvPane = new TranslateTransition();
+		setAvPane.setDuration(Duration.millis(350));
+		setAvPane.setByY(-1000);
+		setAvPane.setNode(avatarBox);
+		setAvPane.play();
+
+		TranslateTransition setUnPane = new TranslateTransition();
+		setUnPane.setDuration(Duration.millis(350));
+		setUnPane.setByY(-1000);
+		setUnPane.setNode(usernameBox);
+		setUnPane.play();
+
+		TranslateTransition setPwPane = new TranslateTransition();
+		setPwPane.setDuration(Duration.millis(350));
+		setPwPane.setByY(-1000);
+		setPwPane.setNode(passwordBox);
+		setPwPane.play();
 	}
 
 	/*
