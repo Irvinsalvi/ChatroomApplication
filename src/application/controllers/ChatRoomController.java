@@ -76,7 +76,7 @@ public class ChatRoomController implements Initializable {
 	@FXML
 	void leaveChatRoom(MouseEvent event) throws IOException, URISyntaxException, InterruptedException {
 		
-		//chatmessager.LogOut();
+		chatmessager.LogOut();
 		switchScene.loginFormScene(event);
 		// TODO clear session
 	}
