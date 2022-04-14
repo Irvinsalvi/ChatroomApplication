@@ -1,6 +1,8 @@
 package application.controllers;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 
 import application.model.User;
 import application.model.userHolder;
@@ -11,10 +13,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import server.ChatMessager;
 
 public class LoginFormController {
 	SceneController switchScene = new SceneController();
 	public static User u;
+	ChatMessager chatmessager = new ChatMessager();
 
     @FXML
     private Button loginBtn;
@@ -29,8 +33,8 @@ public class LoginFormController {
     private PasswordField password;
     
 	@FXML
-	void onLoginClicked(ActionEvent event) throws IOException {
-		if(validateLogin()) {
+	void onLoginClicked(ActionEvent event) throws IOException, URISyntaxException, InterruptedException {
+		if(chatmessager.Login(username.getText(), password.getText())) {
 			u = new User(username.getText(), password.getText(), "1", true);
 			userHolder holder = (userHolder) userHolder.getInstance();
 			holder.setUser(u);
@@ -52,15 +56,20 @@ public class LoginFormController {
 	
 	/**
 	 * validate username and password text fields
+	 * @throws InterruptedException 
+	 * @throws URISyntaxException 
+	 * @throws IOException 
+	 * @throws MalformedURLException 
 	 */
-	public boolean validateLogin() {
-		if(username.getText().toString().equals("admin") && password.getText().toString().equals("password"))
+	/*public boolean validateLogin() throws MalformedURLException, IOException, URISyntaxException, InterruptedException {
+		//if(username.getText().toString().equals("admin") && password.getText().toString().equals("password"))
+		if(chatmessager.Login(username.getText(), password.getText()))
 		{
 			return true;
 		}
 		else
 			return false;
 		
-	}
+	}*/
 	
 }
