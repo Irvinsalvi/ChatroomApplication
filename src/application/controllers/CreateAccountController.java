@@ -46,26 +46,27 @@ public class CreateAccountController {
     
 	@FXML
 	void onCreateAccountBtnClicked(ActionEvent event) throws IOException {
-//		System.out.println(username.getText().toString());
+		passwordsDontMatch.setText("");
+		usernameBlank.setText("");
+		passwordBlank.setText("");
+		confirmPasswordBlank.setText("");
+		
 		if(validateCreateAccount()) {
 
 			u = new User(username.getText(), password.getText(), "1", true);	
 			userHolder holder = (userHolder) userHolder.getInstance();
 			holder.setUser(u);
-			
 			switchScene.chatRoomScene(event);
-		}else if(username.getText().isEmpty()){
+		}if(username.getText().isEmpty()){
 			usernameBlank.setText("Username field cannot be empty!");
-		}else if(password.getText().isEmpty()){
+		}if(password.getText().isEmpty()){
 			passwordBlank.setText("Password field cannot be empty!");
-		}else if(confirmPassword.getText().isEmpty()){
+		}if(confirmPassword.getText().isEmpty()){
 			confirmPasswordBlank.setText("Confirm Password field cannot be empty!");
-		}else if(password.getText() != confirmPassword.getText()){
+		}if(password.getText().toString().equals(confirmPassword.getText().toString()) == false && confirmPassword.getText().isEmpty() && passwordBlank.getText().isEmpty()){
 			passwordsDontMatch.setText("Passwords do not match.");
-		}
-		else
-		{
-			
+		}if(password.getText().toString().equals(confirmPassword.getText().toString()) == false){
+			passwordsDontMatch.setText("Passwords do not match.");
 		}
 	}
 	
@@ -75,7 +76,7 @@ public class CreateAccountController {
 	}
 	
 	public boolean validateCreateAccount() {
-		if(!username.getText().isEmpty() && !password.getText().isEmpty() && !confirmPassword.getText().isEmpty())
+		if(!username.getText().isEmpty() && !password.getText().isEmpty() && !confirmPassword.getText().isEmpty() && password.getText().toString().equals(confirmPassword.getText().toString()))
 		{
 			return true;
 		}

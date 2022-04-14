@@ -33,7 +33,7 @@
                <font>
                   <Font size="27.0" />
                </font></TextField>
-            <Label fx:id="usernameBlank" layoutX="110.0" layoutY="305.0" prefHeight="27.0" prefWidth="0.0" textFill="RED">
+            <Label fx:id="usernameBlank" layoutX="110.0" layoutY="305.0" prefHeight="27.0" prefWidth="378.0" textFill="RED">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -48,7 +48,7 @@
                   <Font size="27.0" />
                </font>
             </PasswordField>
-            <Label fx:id="passwordBlank" layoutX="120.0" layoutY="405.0" prefHeight="27.0" prefWidth="0.0" textFill="RED">
+            <Label fx:id="passwordBlank" layoutX="120.0" layoutY="405.0" prefHeight="27.0" prefWidth="358.0" textFill="RED">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -63,12 +63,12 @@
                   <Font size="27.0" />
                </font>
             </PasswordField>
-            <Label fx:id="confirmPasswordBlank" layoutX="120.0" layoutY="505.0" prefHeight="27.0" prefWidth="0.0" textFill="RED">
+            <Label fx:id="confirmPasswordBlank" layoutX="120.0" layoutY="505.0" prefHeight="27.0" prefWidth="358.0" textFill="RED">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="passwordsDontMatch" layoutX="120.0" layoutY="555.0" prefHeight="27.0" prefWidth="0.0" textFill="RED">
+            <Label fx:id="passwordsDontMatch" layoutX="120.0" layoutY="555.0" prefHeight="27.0" prefWidth="358.0" textFill="RED">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
