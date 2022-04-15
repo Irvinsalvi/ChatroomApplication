@@ -55,90 +55,112 @@ public class ChatMessager {
 		// do stuff with the result
 		return string;
 	}
-
+	
 	public boolean Login(String Name, String Password)
 			throws MalformedURLException, IOException, URISyntaxException, InterruptedException {
-		String response = sendRequestTo(
-				"https://www.robertmorelliworkspace.biz/chat-app-dev/login.php?data=" + new String(Base64.getEncoder()
-						.encode(("{ \"Name\": \"" + Name + "\", \"Password\": \"" + Password + "\"}").getBytes())),
-				"https://www.robertmorelliworkspace.biz/chat-app-dev");
+		String response = sendToRMWithSuffixAndData("login.php",
+				"{ \"Name\": \"" + NE(Name) + "\", \"Password\": \"" + NE(Password) + "\"}");
 		return response.equals("true");
 	}
 
 	public boolean AmILoggedIn() throws MalformedURLException, IOException, URISyntaxException, InterruptedException {
-		String response = sendRequestTo("https://www.robertmorelliworkspace.biz/chat-app-dev/amlogged.php",
-				"https://www.robertmorelliworkspace.biz/chat-app-dev");
+		String response = sendToRMWithSuffix("amlogged.php");
 		return response.equals("true");
 	}
 
 	public String[][] GetComments()
 			throws MalformedURLException, IOException, URISyntaxException, InterruptedException {
-		String response = sendRequestTo("https://www.robertmorelliworkspace.biz/chat-app-dev/GetComments.php",
-				"https://www.robertmorelliworkspace.biz/chat-app-dev");
+		String response = sendToRMWithSuffix("GetComments.php");
 		if (response.trim().equals("false"))
 			return new String[0][0];
 		String[][] Table = new String[response.length() - response.replace(";", "").length() + 1][5];
 		String[] split = response.split(";");
 		for (int x = 0; x < Table.length; x++) {
 			Table[x] = split[x].split(",");
-			Table[x][0] = new String(Base64.getDecoder().decode(Table[x][0].getBytes()));
-			Table[x][1] = new String(Base64.getDecoder().decode(Table[x][1].getBytes()));
+			Table[x][0] = FromB64String(Table[x][0]);
+			Table[x][1] = FromB64String(Table[x][1]);
+		}
+		return Table;
+	}
+
+	public String[][] GetActive() throws MalformedURLException, IOException, URISyntaxException, InterruptedException {
+		String response = sendToRMWithSuffix("GetActive.php");
+		if (response.trim().equals("false"))
+			return new String[0][0];
+		String[][] Table = new String[response.length() - response.replace(";", "").length() + 1][2];
+		String[] split = response.split(";");
+		for (int x = 0; x < Table.length; x++) {
+			Table[x] = split[x].split(",");
+			Table[x][0] = FromB64String(Table[x][0]);
 		}
 		return Table;
 	}
 
 	public boolean CreateAccount(String Name, String Password, int Avatar)
 			throws MalformedURLException, IOException, URISyntaxException, InterruptedException {
-		String response = sendRequestTo(
-				"https://www.robertmorelliworkspace.biz/chat-app-dev/createAccount.php?data="
-						+ new String(Base64.getEncoder()
-								.encode(("{ \"Name\": \"" + Name + "\", \"Password\": \"" + Password
-										+ "\", \"Avatar\": \"" + Avatar + "\" }").getBytes())),
-				"https://www.robertmorelliworkspace.biz/chat-app-dev");
+		String response = sendToRMWithSuffixAndData("createAccount.php", "{ \"Name\": \"" + NE(Name)
+				+ "\", \"Password\": \"" + NE(Password) + "\", \"Avatar\": \"" + NE(Avatar + "") + "\" }");
 		return response.equals("true");
 	}
 
 	public boolean SendMessage(String Message)
 			throws MalformedURLException, IOException, URISyntaxException, InterruptedException {
-		String response = sendRequestTo(
-				"https://www.robertmorelliworkspace.biz/chat-app-dev/SendComment.php?data="
-						+ new String(Base64.getEncoder().encode(("{ \"Comment\": \"" + Message + "\"}").getBytes())),
-				"https://www.robertmorelliworkspace.biz/chat-app-dev");
+		String response = sendToRMWithSuffixAndData("SendComment.php", "{ \"Comment\": \"" + NE(Message) + "\"}");
 		return response.equals("true");
 	}
 
-	public boolean UpdateAcount(int avatar, String NewName)
+	public boolean UpdateAccount(int avatar, String NewName)
 			throws MalformedURLException, IOException, URISyntaxException, InterruptedException {
-		String response = sendRequestTo(
-				"https://www.robertmorelliworkspace.biz/chat-app-dev/SendComment.php?data="
-						+ new String(Base64.getEncoder()
-								.encode(("{ \"NameNew\": \"" + NewName + "\",\"Avatar\": " + avatar + "}").getBytes())),
-				"https://www.robertmorelliworkspace.biz/chat-app-dev");
+		String response = sendToRMWithSuffixAndData("updateAccount.php",
+				"{ \"NameNew\": \"" + NE(NewName) + "\",\"Avatar\": " + NE(avatar + "") + "}");
 		return response.equals("true");
 	}
 
 	public boolean UpdateAvatar(int avatar)
 			throws MalformedURLException, IOException, URISyntaxException, InterruptedException {
-		String response = sendRequestTo(
-				"https://www.robertmorelliworkspace.biz/chat-app-dev/SendComment.php?data="
-						+ new String(Base64.getEncoder().encode(("{\"Avatar\": " + avatar + "}").getBytes())),
-				"https://www.robertmorelliworkspace.biz/chat-app-dev");
+		String response = sendToRMWithSuffixAndData("updateAvatar.php", "{\"Avatar\": " + NE(avatar + "") + "}");
 		return response.equals("true");
 	}
 
 	public boolean UpdateName(String NewName)
 			throws MalformedURLException, IOException, URISyntaxException, InterruptedException {
-		String response = sendRequestTo(
-				"https://www.robertmorelliworkspace.biz/chat-app-dev/SendComment.php?data="
-						+ new String(Base64.getEncoder().encode(("{ \"NameNew\": \"" + NewName + " \"}").getBytes())),
-				"https://www.robertmorelliworkspace.biz/chat-app-dev");
+		String response = sendToRMWithSuffixAndData("updateName.php", "{ \"NameNew\": \"" + NE(NewName) + "\"}");
+		return response.equals("true");
+	}
+
+	public boolean UpdatePassword(String NewPass)
+			throws MalformedURLException, IOException, URISyntaxException, InterruptedException {
+		String response = sendToRMWithSuffixAndData("updatePassword.php",
+				"{ \"newpassword\": \"" + NE(NewPass) + "\"}");
 		return response.equals("true");
 	}
 
 	public boolean LogOut() throws MalformedURLException, IOException, URISyntaxException, InterruptedException {
-		String response = sendRequestTo("https://www.robertmorelliworkspace.biz/chat-app-dev/logOut.php",
+		return sendToRMWithSuffix("logOut.php").equals("true");
+	}
+
+	public String sendToRMWithSuffix(String suffix)
+			throws MalformedURLException, IOException, URISyntaxException, InterruptedException {
+		return sendRequestTo("https://www.robertmorelliworkspace.biz/chat-app-dev/" + suffix,
 				"https://www.robertmorelliworkspace.biz/chat-app-dev");
-		return response.equals("true");
+	}
+
+	public String sendToRMWithSuffixAndData(String suffix, String Data)
+			throws MalformedURLException, IOException, URISyntaxException, InterruptedException {
+		return sendRequestTo(
+				"https://www.robertmorelliworkspace.biz/chat-app-dev/" + suffix + "?data=" + B64String(Data),
+				"https://www.robertmorelliworkspace.biz/chat-app-dev");
+	}
+
+	public String B64String(String data) {
+		return new String(Base64.getEncoder().encode(data.getBytes()));
+	}
+	public String FromB64String(String data) {
+		return new String(Base64.getDecoder().decode(data.getBytes()));
+	}
+
+	public String NE(String toEscape) {
+		return toEscape.replace("\"", "\\\"");
 	}
 
 }
