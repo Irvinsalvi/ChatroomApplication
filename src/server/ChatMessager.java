@@ -77,7 +77,7 @@ public class ChatMessager {
 				"https://www.robertmorelliworkspace.biz/chat-app-dev");
 		if (response.trim().equals("false"))
 			return new String[0][0];
-		String[][] Table = new String[response.length() - response.replace(";", "").length() + 1][4];
+		String[][] Table = new String[response.length() - response.replace(";", "").length() + 1][5];
 		String[] split = response.split(";");
 		for (int x = 0; x < Table.length; x++) {
 			Table[x] = split[x].split(",");
