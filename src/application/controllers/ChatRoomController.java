@@ -25,6 +25,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
+import server.ChatMessager;
 import server.activeUsers;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -40,6 +41,7 @@ public class ChatRoomController implements Initializable {
 	SceneController switchScene = new SceneController();
 	User u;
 	activeUsers onlineUsers = new activeUsers();
+	ChatMessager chatmessager = new ChatMessager();
 
 	String name = "";
 	String status = "";
@@ -73,7 +75,9 @@ public class ChatRoomController implements Initializable {
 	private TextField messageBubble;
 
 	@FXML
-	void leaveChatRoom(MouseEvent event) throws IOException {
+	void leaveChatRoom(MouseEvent event) throws IOException, URISyntaxException, InterruptedException {
+		
+		chatmessager.LogOut();
 		switchScene.loginFormScene(event);
 		// TODO clear session
 	}

@@ -1,6 +1,7 @@
 package application.controllers;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import application.model.User;
 import application.model.userHolder;
@@ -11,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import server.ChatMessager;
 
 public class CreateAccountController {
 	
@@ -19,6 +21,8 @@ public class CreateAccountController {
 	public static User u;
 	
 	private int currentPicture;
+	
+	ChatMessager chatmessager = new ChatMessager();
 	
 	@FXML
     private Button createAccountBtn;
@@ -75,14 +79,16 @@ public class CreateAccountController {
     private Label passwordsDontMatch;
     
 	@FXML
-	void onCreateAccountBtnClicked(ActionEvent event) throws IOException {
+	void onCreateAccountBtnClicked(ActionEvent event) throws IOException, URISyntaxException, InterruptedException {
 		passwordsDontMatch.setText("");
 		usernameBlank.setText("");
 		passwordBlank.setText("");
 		confirmPasswordBlank.setText("");
 		
 		if(validateCreateAccount()) {
+			
 			selectCurrentPicture();
+			chatmessager.CreateAccount(username.getText(), password.getText(), currentPicture);
 			u = new User(username.getText(), password.getText(), currentPicture, true);	
 			userHolder holder = (userHolder) userHolder.getInstance();
 			holder.setUser(u);
