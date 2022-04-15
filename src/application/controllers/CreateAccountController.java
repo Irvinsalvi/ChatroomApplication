@@ -101,7 +101,6 @@ public class CreateAccountController {
 		if(button2.isSelected() == true) {
 			currentPicture = 2;
 		}
-		
 		if(button3.isSelected() == true) {
 			currentPicture = 3;
 		}
