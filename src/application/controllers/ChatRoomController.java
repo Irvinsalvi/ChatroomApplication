@@ -1,19 +1,18 @@
 package application.controllers;
 
-import java.io.BufferedReader;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -27,21 +26,20 @@ import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import server.ChatMessager;
 import server.activeUsers;
-import java.io.InputStreamReader;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Base64;
-import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import application.Main;
 import application.model.User;
-import application.model.userHolder;
+import application.model.UserHolder;
 
 public class ChatRoomController implements Initializable {
 	SceneController switchScene = new SceneController();
 	User u;
 	activeUsers onlineUsers = new activeUsers();
-	ChatMessager chatmessager = new ChatMessager();
+	ChatMessager chatmessager;
 
 	String name = "";
 	String status = "";
@@ -75,8 +73,7 @@ public class ChatRoomController implements Initializable {
 	private TextField messageBubble;
 
 	@FXML
-	void leaveChatRoom(MouseEvent event) throws IOException, URISyntaxException, InterruptedException {
-		
+	void leaveChatRoom(MouseEvent event) throws IOException, URISyntaxException, InterruptedException {	
 		chatmessager.LogOut();
 		switchScene.loginFormScene(event);
 		// TODO clear session
@@ -111,83 +108,16 @@ public class ChatRoomController implements Initializable {
 	}
 
 	@FXML
-	boolean sendMessage(ActionEvent event) {
+	void sendMessage(ActionEvent event) {
 		String m = messageField.getText();
-		String pattern = "yyyy-MM-dd HH:mm:ss";
-		SimpleDateFormat simpledateformat = new SimpleDateFormat(pattern);
-		String currTime = simpledateformat.format(new Date());
-
-		System.out.println("send message button clicked");
-		boolean messageStatus = false;
 
 		try {
-			String toSend = "https://www.robertmorelliworkspace.biz/chat-app/SendComment.php?data="
-					+ new String(Base64.getEncoder().encode(
-							("{ \"Name\": \"" + name + "\", \"Comment\": \"" + m + "\", \"Room\": \"" + room + "\" }")
-									.getBytes()));
-			URL url = new URL(toSend);
-			// url object for url purposes
-
-			HttpURLConnection con = (HttpURLConnection) url.openConnection();
-			con.setRequestMethod("GET");
-
-			con.setDoOutput(true);
-
-			con.setConnectTimeout(5000);
-			con.setReadTimeout(5000);
-			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-			String inputLine;
-			StringBuffer content = new StringBuffer();
-			while ((inputLine = in.readLine()) != null) {
-				content.append(inputLine);
-			}
-			String responseTotal = new String(content);
-			in.close();
-			con.disconnect();
-			messageStatus = responseTotal.equals("comment sent");
-			displayMessage(name, m, currTime);
+			chatmessager.SendMessage(m);
 			messageField.clear();
-		} catch (IOException e) {
-			// TODO DISPLAY MESSAGE NOT SENT ERROR
-			System.out.println("Houston, we have a problem.");
+		} catch (IOException | URISyntaxException | InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
-		return messageStatus;
-	}
-
-	public static String[][] getComments(String room) throws IOException {
-		String roomString = new String(Base64.getEncoder().encode(room.getBytes()));
-		URL url = new URL("https://www.robertmorelliworkspace.biz/chat-app/GetComments.php?roomREF="
-				+ (roomString.length() > 20 ? roomString.substring(0, 20) : roomString));
-		// url object for url purposes
-
-		HttpURLConnection con = (HttpURLConnection) url.openConnection();
-		con.setRequestMethod("GET");
-
-		con.setDoOutput(true);
-
-		con.setConnectTimeout(5000);
-		con.setReadTimeout(5000);
-
-		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-		String inputLine;
-		StringBuffer content = new StringBuffer();
-		while ((inputLine = in.readLine()) != null) {
-			content.append(inputLine);
-		}
-		String responseTotal = new String(content);
-		int commentNumber = responseTotal.length() - responseTotal.replaceAll(";", "").length() + 1;
-		String[][] responseTable = new String[commentNumber][3];
-		int reponseNumber = 0;
-		for (String s : responseTotal.split(";")) {
-			String[] line = s.split(",");
-			responseTable[reponseNumber][0] = new String(Base64.getDecoder().decode(line[0]));
-			responseTable[reponseNumber][1] = new String(Base64.getDecoder().decode(line[1]));
-			responseTable[reponseNumber++][2] = line[2];
-		}
-		in.close();
-		con.disconnect();
-		return responseTable;
 	}
 
 	@FXML
@@ -205,21 +135,21 @@ public class ChatRoomController implements Initializable {
 
 	public void displayMessage(String username, String message, String timestamp) throws MalformedURLException {
 
-		HBox incomingMsg = new HBox();
-		incomingMsg.setId("outgoingMsgHBox");
-		chatBox.getChildren().add(incomingMsg);
+		HBox msgHBox = new HBox();
+//		msgHBox.setId("outgoingMsgHBox");
+		chatBox.getChildren().add(msgHBox);
 		if (u.getUsername().equals(username)) {
-			incomingMsg.setStyle("-fx-alignment:TOP_RIGHT;");
+			msgHBox.setStyle("-fx-alignment:TOP_RIGHT;");
 		} else {
-			incomingMsg.setStyle("-fx-alignment:TOP_LEFT;");
+			msgHBox.setStyle("-fx-alignment:TOP_LEFT;");
 		}
 
-		ImageView senderPic = new ImageView();
-		incomingMsg.getChildren().add(senderPic);
+		ImageView msgPofilePic = new ImageView();
+		msgHBox.getChildren().add(msgPofilePic);
 
-		VBox messageBox = new VBox();
-		incomingMsg.getChildren().add(messageBox);
-		messageBox.setStyle("-fx-background-color:rgba(0,0,0,0.6);");
+		VBox msgVBox = new VBox();
+		msgHBox.getChildren().add(msgVBox);
+		msgVBox.setStyle("-fx-background-color:rgba(0,0,0,0.6);");
 
 		TextArea msg = new TextArea(message);
 		msg.setEditable(false);
@@ -229,11 +159,11 @@ public class ChatRoomController implements Initializable {
 		time.setStyle("-fx-text-fill:white;");
 		time.setId("outgoingMessageTimestamp");
 		Label senderName = new Label(username);
-		senderName.setId("outgoingMsgName");
+
 		senderName.setStyle("-fx-text-fill:white;");
-		messageBox.getChildren().add(msg);
-		messageBox.getChildren().add(time);
-		messageBox.getChildren().add(senderName);
+		msgVBox.getChildren().add(msg);
+		msgVBox.getChildren().add(time);
+		msgVBox.getChildren().add(senderName);
 
 	}
 	
@@ -301,35 +231,18 @@ public class ChatRoomController implements Initializable {
     }
 
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		userHolder holder = (userHolder) userHolder.getInstance();
-		u = holder.getUser();
-		name = u.getUsername();
-		loggedInAsName.setText(name);
-		currentUser.setText(u.getUsername());
+	public void initialize(URL arg0, ResourceBundle arg1){
+		UserHolder holder = (UserHolder) UserHolder.getInstance();//get instance of this user 
+		u = holder.getUser();//assign user from instance of this user
+		chatmessager = holder.getChatter();//get chatter assigned to this user
+		name = u.getUsername();//get username of this user
 
-		String[][] messages = null;
+		loggedInAsName.setText(name);//displays username on left side pane
+		currentUser.setText(u.getUsername());//what label does this belong to?
 
-		try {
-			messages = getComments("");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		scrollPane.vvalueProperty().bind(chatBox.heightProperty());//sets scroll pane to bottom position
 
-		for (int i = 0; i < messages.length; i++) {
-			try {
-				displayMessage(messages[i][0], messages[i][1], messages[i][2]);
-				System.out.println(messages[i][0] + " : " + messages[i][1] + " : " + messages[i][2]);//
-				System.out.println(i);
-				System.out.println(messages.length);
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		scrollPane.vvalueProperty().bind(chatBox.heightProperty());
-
+		//gets active user list
 		try {
 			String[][] usersActive = activeUsers.getActiveUsers();
 
@@ -365,6 +278,29 @@ public class ChatRoomController implements Initializable {
 		setPwPane.setByY(-1000);
 		setPwPane.setNode(passwordBox);
 		setPwPane.play();
+		
+		//timer runs every 2 seconds
+	    Timer timer = new Timer();
+	    timer.scheduleAtFixedRate(new TimerTask() {
+	        @Override
+	        public void run() {
+	        	Platform.runLater(new Runnable() {
+	                @Override
+	                public void run() {
+	            		//gets all messages not seen by this instance of chatter
+	            		//and displays them in messages bubbles
+	            		try {
+	            			for (String[] s : chatmessager.GetComments()) {
+	            				displayMessage(s[0], s[1], s[2]);
+	            				}
+	            		} catch (IOException | URISyntaxException | InterruptedException e1) {
+	            			e1.printStackTrace();
+	            		}
+	                }
+	            });
+	        }
+	    }, 0, 2000);
+		
 	}
 
 	/*

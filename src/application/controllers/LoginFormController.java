@@ -1,24 +1,22 @@
 package application.controllers;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 
 import application.model.User;
-import application.model.userHolder;
+import application.model.UserHolder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import server.ChatMessager;
 
 public class LoginFormController {
 	SceneController switchScene = new SceneController();
 	public static User u;
-	ChatMessager chatmessager = new ChatMessager();
+	private ChatMessager chatmessager = new ChatMessager();
 
     @FXML
     private Button loginBtn;
@@ -36,8 +34,9 @@ public class LoginFormController {
 	void onLoginClicked(ActionEvent event) throws IOException, URISyntaxException, InterruptedException {
 		if(chatmessager.Login(username.getText(), password.getText())) {
 			u = new User(username.getText(), password.getText(), 0, true);
-			userHolder holder = (userHolder) userHolder.getInstance();
+			UserHolder holder = (UserHolder) UserHolder.getInstance();
 			holder.setUser(u);
+			holder.setChatter(chatmessager);
 			
 			switchScene.chatRoomScene(event);
 		}else if(username.getText().isEmpty() || password.getText().isEmpty()){

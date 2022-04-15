@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 import application.model.User;
-import application.model.userHolder;
+import application.model.UserHolder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -90,7 +90,7 @@ public class CreateAccountController {
 			selectCurrentPicture();
 			chatmessager.CreateAccount(username.getText(), password.getText(), currentPicture);
 			u = new User(username.getText(), password.getText(), currentPicture, true);	
-			userHolder holder = (userHolder) userHolder.getInstance();
+			UserHolder holder = (UserHolder) UserHolder.getInstance();
 			holder.setUser(u);
 			switchScene.chatRoomScene(event);
 		}
