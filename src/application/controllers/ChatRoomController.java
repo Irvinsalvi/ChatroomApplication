@@ -314,42 +314,42 @@ public class ChatRoomController implements Initializable {
 	 */
 	public Image getImage(String num) throws FileNotFoundException, URISyntaxException {
 		String imagepath = "";
-		Circle circle = new Circle(50, 50, 25);
+		//Circle circle = new Circle(50, 50, 25);
 
 		switch (num) {
 		case "0":
-			imagepath = "@..\\util\\images\\avatar-0.png";
+			imagepath = "file:avatar-0.png";
 			break;
 		case "1":
-			imagepath = "@..\\util\\images\\avatar-1.png";
+			imagepath = "file:avatar-1.png";
 			break;
 		case "2":
-			imagepath = "@..\\util\\images\\avatar-2.png";
+			imagepath = "file:avatar-2.png";
 			break;
 		case "3":
-			imagepath = "@..\\util\\images\\avatar-3.png";
+			imagepath = "file:avatar-3.png";
 			break;
 		case "4":
-			imagepath = "@..\\util\\images\\avatar-4.png";
+			imagepath = "file:avatar-4.png";
 			break;
 		case "5":
-			imagepath = "../util/images/avatar-5.png";
+			imagepath = "file:avatar-5.png";
 			break;
 		case "6":
-			imagepath = "@..\\util\\images\\avatar-6.png";
+			imagepath = "file:avatar-6.png";
 			break;
 		case "7":
-			imagepath = "@..\\util\\images\\avatar-7.png";
+			imagepath = "file:avatar-7.png";
 			break;
 		case "8":
-			imagepath = "@..\\util\\images\\avatar-8.png";
+			imagepath = "file:avatar-8.png";
 			break;
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + num);
 		}
 
-		Image image = new Image(Main.class.getResource(imagepath).toURI().toString());
-		circle.setFill(new ImagePattern(image));
+		Image image = new Image(imagepath);
+		//circle.setFill(new ImagePattern(image));
 
 		return image;
 
