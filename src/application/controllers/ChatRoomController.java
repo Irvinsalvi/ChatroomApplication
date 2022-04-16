@@ -16,12 +16,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
@@ -248,7 +250,7 @@ public class ChatRoomController implements Initializable {
 			String[][] usersActive = chatmessager.GetActive();
 
 			for (String[] strings : usersActive) {
-				activeUserBox.getChildren().add(getImage(strings[1]));
+				displayUsers(strings[0], strings[1]);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -313,9 +315,8 @@ public class ChatRoomController implements Initializable {
 	 * @return image that will display in the active users
 	 * 
 	 */
-	public ImageView getImage(String num) throws FileNotFoundException, URISyntaxException {
+	public String getImage(String num) throws FileNotFoundException, URISyntaxException {
 		String imagepath = "";
-		Circle circle = new Circle(50, 50, 25);
 
 		switch (num) {
 		case "0":
@@ -349,16 +350,32 @@ public class ChatRoomController implements Initializable {
 			throw new IllegalArgumentException("Unexpected value: " + num);
 		}
 
-		Image image = new Image(imagepath, 50, 50, false, false);
-		circle.setFill(new ImagePattern(image));
-		ImageView imageview = new ImageView();
-		imageview.setImage(image);
-		imageview.setPreserveRatio(true);
-		imageview.setSmooth(true);
-		imageview.setCache(true);
+		return imagepath;
 
-		return imageview;
-
+	}
+	
+		public void displayUsers(String username, String avatar) throws MalformedURLException, FileNotFoundException, URISyntaxException {
+	    activeUserBox.setSpacing(10);
+	
+	    HBox userHBox = new HBox();
+	    userHBox.setSpacing(10);
+	    activeUserBox.getChildren().add(userHBox);
+	
+	    Image image = new Image(getImage(avatar), 50, 50, true, true);
+	    ImageView userAvatar = new ImageView();
+	    userAvatar.setImage(image);
+	
+	    Label user = new Label(username);
+	    user.setStyle("-fx-text-fill:white;-fx-font-size:16px;");
+	
+	    //Circle circle = new Circle(5, 5, 10);
+	    //circle.setFill(javafx.scene.paint.Color.GREEN);
+	
+	
+	    userHBox.getChildren().add(userAvatar);
+	    userHBox.getChildren().add(user);
+	    //userHBox.getChildren().add(circle);
+	
 	}
 
 }
