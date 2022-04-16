@@ -2,6 +2,10 @@ package application.model;
 
 import server.ChatMessager;
 
+/**
+ * Holds the user and chatmessager object for this user as an instance
+ *
+ */
 public final class UserHolder {
 	  
 	  private User user;

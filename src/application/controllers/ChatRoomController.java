@@ -1,6 +1,5 @@
 package application.controllers;
 
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -76,7 +75,7 @@ public class ChatRoomController implements Initializable {
 	private TextField messageBubble;
 
 	@FXML
-	void leaveChatRoom(MouseEvent event) throws IOException, URISyntaxException, InterruptedException {	
+	void leaveChatRoom(MouseEvent event) throws IOException, URISyntaxException, InterruptedException {
 		chatmessager.LogOut();
 		switchScene.loginFormScene(event);
 		// TODO clear session
@@ -86,27 +85,27 @@ public class ChatRoomController implements Initializable {
 	void openSettingsPane(MouseEvent event) {
 		System.out.println("open settings button clicked");
 		// TODO show settings pane or dialog box
-		
-		//slide animation
+
+		// slide animation
 		TranslateTransition slide = new TranslateTransition();
 		slide.setDuration(Duration.millis(350));
 		slide.setNode(pane2);
 
-		//Open settings pane
+		// Open settings pane
 		if (!pane1.isVisible()) {
 			pane1.setVisible(true);
 			slide.setByY(+1000);
 			slide.play();
 		}
-		
-		//close settings pane
+
+		// close settings pane
 		else {
 			pane1.setVisible(false);
 			slide.setByY(-1000);
 			slide.play();
 
-			//close all open settings tabs
-	    	closeAll();
+			// close all open settings tabs
+			closeAll();
 		}
 	}
 
@@ -169,61 +168,58 @@ public class ChatRoomController implements Initializable {
 		msgVBox.getChildren().add(senderName);
 
 	}
-	
-    @FXML
-    void openChangeAvatar(MouseEvent event) {
-    	slide(avatarBox);
-    }
 
-    @FXML
-    void openChangePassword(MouseEvent event) {
-    	slide(passwordBox);
+	@FXML
+	void openChangeAvatar(MouseEvent event) {
+		slide(avatarBox);
+	}
 
-    }
+	@FXML
+	void openChangePassword(MouseEvent event) {
+		slide(passwordBox);
 
-    @FXML
-    void openChangeUsername(MouseEvent event) {
-    	slide(usernameBox);
+	}
 
-    }
+	@FXML
+	void openChangeUsername(MouseEvent event) {
+		slide(usernameBox);
 
-    //slide animations for settings tabs
-    public void slide(VBox box) {
-    	TranslateTransition slide = new TranslateTransition();
+	}
+
+	// slide animations for settings tabs
+	public void slide(VBox box) {
+		TranslateTransition slide = new TranslateTransition();
 		slide.setDuration(Duration.millis(350));
 		slide.setNode(box);
 
-		if(!box.isVisible()) {
+		if (!box.isVisible()) {
 			closeAll();
 
 			settingsPane.setVisible(true);
 			box.setVisible(true);
 			slide.setByY(1000);
 			slide.play();
-		}
-		else {
+		} else {
 			slide.setNode(box);
 			slide.setByY(-1000);
 			slide.play();
 			box.setVisible(false);
 			settingsPane.setVisible(false);
 		}
-    }
+	}
 
-    //closes all open settings tabs
-    public void closeAll() {
-    	TranslateTransition closeAll = new TranslateTransition();
+	// closes all open settings tabs
+	public void closeAll() {
+		TranslateTransition closeAll = new TranslateTransition();
 		closeAll.setDuration(Duration.millis(350));
-		if(settingsPane.isVisible()) {
-			if(avatarBox.isVisible()) {
+		if (settingsPane.isVisible()) {
+			if (avatarBox.isVisible()) {
 				closeAll.setNode(avatarBox);
 				avatarBox.setVisible(false);
-			}
-			else if (usernameBox.isVisible()) {
+			} else if (usernameBox.isVisible()) {
 				closeAll.setNode(usernameBox);
 				usernameBox.setVisible(false);
-			}
-			else if (passwordBox.isVisible()) {
+			} else if (passwordBox.isVisible()) {
 				closeAll.setNode(passwordBox);
 				passwordBox.setVisible(false);
 			}
@@ -231,32 +227,21 @@ public class ChatRoomController implements Initializable {
 		}
 		closeAll.setByY(-1000);
 		closeAll.play();
-    }
+	}
 
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1){
-		UserHolder holder = (UserHolder) UserHolder.getInstance();//get instance of this user 
-		u = holder.getUser();//assign user from instance of this user
-		chatmessager = holder.getChatter();//get chatter assigned to this user
-		name = u.getUsername();//get username of this user
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		UserHolder holder = (UserHolder) UserHolder.getInstance();// get instance of this user
+		u = holder.getUser();// assign user from instance of this user
+		chatmessager = holder.getChatter();// get chatter assigned to this user
+		name = u.getUsername();// get username of this user
 
-		loggedInAsName.setText(name);//displays username on left side pane
-		currentUser.setText(u.getUsername());//what label does this belong to?
+		loggedInAsName.setText(name);// displays username on left side pane
+		currentUser.setText(u.getUsername());// what label does this belong to?
 
-		scrollPane.vvalueProperty().bind(chatBox.heightProperty());//sets scroll pane to bottom position
-		
-		//gets active user list
-		try {
-			String[][] usersActive = chatmessager.GetActive();
+		scrollPane.vvalueProperty().bind(chatBox.heightProperty());// sets scroll pane to bottom position
 
-			for (String[] strings : usersActive) {
-				displayUsers(strings[0], strings[1]);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		//Settings Pane: move all off-screen
+		// Settings Pane: move all off-screen
 		pane1.setVisible(false);
 		TranslateTransition slide = new TranslateTransition();
 		slide.setDuration(Duration.millis(350));
@@ -281,29 +266,44 @@ public class ChatRoomController implements Initializable {
 		setPwPane.setByY(-1000);
 		setPwPane.setNode(passwordBox);
 		setPwPane.play();
-		
-		//timer runs every 2 seconds
-	    Timer timer = new Timer();
-	    timer.scheduleAtFixedRate(new TimerTask() {
-	        @Override
-	        public void run() {
-	        	Platform.runLater(new Runnable() {
-	                @Override
-	                public void run() {
-	            		//gets all messages not seen by this instance of chatter
-	            		//and displays them in messages bubbles
-	            		try {
-	            			for (String[] s : chatmessager.GetComments()) {
-	            				displayMessage(s[0], s[1], s[2]);
-	            				}
-	            		} catch (IOException | URISyntaxException | InterruptedException e1) {
-	            			e1.printStackTrace();
-	            		}
-	                }
-	            });
-	        }
-	    }, 0, 2000);
-		
+
+		// timer runs every 2 seconds
+		Timer timer = new Timer();
+		timer.scheduleAtFixedRate(new TimerTask() {
+			@Override
+			public void run() {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						// gets all messages not seen by this instance of chatter
+						// and displays them in messages bubbles
+						try {
+							for (String[] s : chatmessager.GetComments()) {
+								displayMessage(s[0], s[1], s[2]);
+							}
+						} catch (IOException | URISyntaxException | InterruptedException e1) {
+							e1.printStackTrace();
+						}
+
+						// updates active user list
+						try {
+							activeUserBox.getChildren().clear();// clears old active user list
+
+							String[][] usersActive = chatmessager.GetActive();
+
+							for (String[] strings : usersActive) {
+								if(!(u.getUsername().equals(strings[0]))) {//all active users except this user
+									displayUsers(strings[0], strings[1]);
+								}
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		}, 0, 2000);
+
 	}
 
 	/*
@@ -353,29 +353,38 @@ public class ChatRoomController implements Initializable {
 		return imagepath;
 
 	}
-	
-		public void displayUsers(String username, String avatar) throws MalformedURLException, FileNotFoundException, URISyntaxException {
-	    activeUserBox.setSpacing(10);
-	
-	    HBox userHBox = new HBox();
-	    userHBox.setSpacing(10);
-	    activeUserBox.getChildren().add(userHBox);
-	
-	    Image image = new Image(getImage(avatar), 50, 50, true, true);
-	    ImageView userAvatar = new ImageView();
-	    userAvatar.setImage(image);
-	
-	    Label user = new Label(username);
-	    user.setStyle("-fx-text-fill:white;-fx-font-size:16px;");
-	
-	    //Circle circle = new Circle(5, 5, 10);
-	    //circle.setFill(javafx.scene.paint.Color.GREEN);
-	
-	
-	    userHBox.getChildren().add(userAvatar);
-	    userHBox.getChildren().add(user);
-	    //userHBox.getChildren().add(circle);
-	
+
+	/**
+	 * Adds containers and displays each active user in the container
+	 * 
+	 * @param username the user name of the user
+	 * @param avatar   the avatar of the user
+	 * @throws MalformedURLException
+	 * @throws FileNotFoundException
+	 * @throws URISyntaxException
+	 */
+	public void displayUsers(String username, String avatar)
+			throws MalformedURLException, FileNotFoundException, URISyntaxException {
+		activeUserBox.setSpacing(10);
+
+		HBox userHBox = new HBox();
+		userHBox.setSpacing(10);
+		activeUserBox.getChildren().add(userHBox);
+
+		Image image = new Image(getImage(avatar), 50, 50, true, true);
+		ImageView userAvatar = new ImageView();
+		userAvatar.setImage(image);
+
+		Label user = new Label(username);
+		user.setStyle("-fx-text-fill:white;-fx-font-size:16px;");
+
+		// Circle circle = new Circle(5, 5, 10);
+		// circle.setFill(javafx.scene.paint.Color.GREEN);
+
+		userHBox.getChildren().add(userAvatar);
+		userHBox.getChildren().add(user);
+		// userHBox.getChildren().add(circle);
+
 	}
 
 }
