@@ -78,7 +78,6 @@ public class ChatMessager {
 		for (int x = 0; x < Table.length; x++) {
 			Table[x] = split[x].split(",");
 			Table[x][0] = FromB64String(Table[x][0]);
-			Table[x][1] = FromB64String(Table[x][1]);
 		}
 		return Table;
 	}
