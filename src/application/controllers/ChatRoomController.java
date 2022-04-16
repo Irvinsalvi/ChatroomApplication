@@ -10,6 +10,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -241,13 +242,13 @@ public class ChatRoomController implements Initializable {
 		currentUser.setText(u.getUsername());//what label does this belong to?
 
 		scrollPane.vvalueProperty().bind(chatBox.heightProperty());//sets scroll pane to bottom position
-
+		
 		//gets active user list
 		try {
-			String[][] usersActive = activeUsers.getActiveUsers();
+			String[][] usersActive = chatmessager.GetActive();
 
 			for (String[] strings : usersActive) {
-				activeUserBox.getChildren().add(new Label(strings[0]));
+				activeUserBox.getChildren().add(getImage(strings[1]));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -312,46 +313,51 @@ public class ChatRoomController implements Initializable {
 	 * @return image that will display in the active users
 	 * 
 	 */
-	public Image getImage(String num) throws FileNotFoundException, URISyntaxException {
+	public ImageView getImage(String num) throws FileNotFoundException, URISyntaxException {
 		String imagepath = "";
-		//Circle circle = new Circle(50, 50, 25);
+		Circle circle = new Circle(50, 50, 25);
 
 		switch (num) {
 		case "0":
-			imagepath = "file:avatar-0.png";
+			imagepath = "avatar-0.png";
 			break;
 		case "1":
-			imagepath = "file:avatar-1.png";
+			imagepath = "avatar-1.png";
 			break;
 		case "2":
-			imagepath = "file:avatar-2.png";
+			imagepath = "avatar-2.png";
 			break;
 		case "3":
-			imagepath = "file:avatar-3.png";
+			imagepath = "avatar-3.png";
 			break;
 		case "4":
-			imagepath = "file:avatar-4.png";
+			imagepath = "avatar-4.png";
 			break;
 		case "5":
-			imagepath = "file:avatar-5.png";
+			imagepath = "avatar-5.png";
 			break;
 		case "6":
-			imagepath = "file:avatar-6.png";
+			imagepath = "avatar-6.png";
 			break;
 		case "7":
-			imagepath = "file:avatar-7.png";
+			imagepath = "avatar-7.png";
 			break;
 		case "8":
-			imagepath = "file:avatar-8.png";
+			imagepath = "avatar-8.png";
 			break;
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + num);
 		}
 
-		Image image = new Image(imagepath);
-		//circle.setFill(new ImagePattern(image));
+		Image image = new Image(imagepath, 50, 50, false, false);
+		circle.setFill(new ImagePattern(image));
+		ImageView imageview = new ImageView();
+		imageview.setImage(image);
+		imageview.setPreserveRatio(true);
+		imageview.setSmooth(true);
+		imageview.setCache(true);
 
-		return image;
+		return imageview;
 
 	}
 
