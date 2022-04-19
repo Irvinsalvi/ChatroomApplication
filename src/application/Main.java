@@ -40,7 +40,8 @@ public class Main extends Application {
 	
 	public void stop() {
 		try {
-			ChatMessager.LastChatCreated.LogOut();
+			if(ChatMessager.LastChatCreated != null)
+				ChatMessager.LastChatCreated.LogOut();
 			super.stop();
 		} catch (Exception e) {
 			System.out.println("oof ouch my lungs");

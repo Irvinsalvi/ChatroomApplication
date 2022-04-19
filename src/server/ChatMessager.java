@@ -16,7 +16,7 @@ public class ChatMessager {
 
 	public Integer lastChat;
 	public CookieManager cookieManager;
-	public static ChatMessager LastChatCreated;
+	public static ChatMessager LastChatCreated = null;
 
 	public ChatMessager() {
 		lastChat = 0;
