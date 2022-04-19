@@ -16,6 +16,7 @@ public class ChatMessager {
 
 	public Integer lastChat;
 	public CookieManager cookieManager;
+	public static ChatMessager LastChatCreated;
 
 	public ChatMessager() {
 		lastChat = 0;
@@ -23,6 +24,7 @@ public class ChatMessager {
 		CookieHandler.setDefault(cookieManager);
 		CookiePolicy cookiePolicy = CookiePolicy.ACCEPT_ALL;
 		cookieManager.setCookiePolicy(cookiePolicy);
+		LastChatCreated = this;
 	}
 
 	/**

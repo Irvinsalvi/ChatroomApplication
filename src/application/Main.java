@@ -1,8 +1,13 @@
 package application;
 	
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
+import server.ChatMessager;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -31,5 +36,14 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 		launch(args);
+	}
+	
+	public void stop() {
+		try {
+			ChatMessager.LastChatCreated.LogOut();
+			super.stop();
+		} catch (Exception e) {
+			System.out.println("oof ouch my lungs");
+		}
 	}
 }
