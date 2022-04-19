@@ -5,6 +5,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import server.ChatMessager;
@@ -45,6 +46,13 @@ public class Main extends Application {
 			super.stop();
 		} catch (Exception e) {
 			System.out.println("oof ouch my lungs");
+			try {
+				super.stop();
+			} catch (Exception e1) {
+				System.out.println("double oof ouch my lungs");
+			}
 		}
+		Platform.exit();
+		System.exit(0);
 	}
 }
