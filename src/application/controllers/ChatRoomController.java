@@ -237,6 +237,7 @@ public class ChatRoomController implements Initializable {
 		name = u.getUsername();// get username of this user
 
 		loggedInAsName.setText(name);// displays username on left side pane
+		loggedInAsName.setStyle("-fx-font-size:16px;-fx-font-weight:bold");
 		currentUser.setText(u.getUsername());// what label does this belong to?
 
 		scrollPane.vvalueProperty().bind(chatBox.heightProperty());// sets scroll pane to bottom position
@@ -376,14 +377,16 @@ public class ChatRoomController implements Initializable {
 		userAvatar.setImage(image);
 
 		Label user = new Label(username);
-		user.setStyle("-fx-text-fill:white;-fx-font-size:16px;");
+		user.setStyle("-fx-text-fill:white;-fx-font-size:18px; -fx-font-weight:bold");
 
-		// Circle circle = new Circle(5, 5, 10);
-		// circle.setFill(javafx.scene.paint.Color.GREEN);
+		Circle circle = new Circle();
+		circle.setStroke(Color.WHITE);
+		circle.setStrokeWidth(2);
+		circle.setFill(new ImagePattern(image));
+		circle.setRadius(25);
 
-		userHBox.getChildren().add(userAvatar);
+		userHBox.getChildren().add(circle);
 		userHBox.getChildren().add(user);
-		// userHBox.getChildren().add(circle);
 
 	}
 
