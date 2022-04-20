@@ -9,13 +9,11 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -33,7 +31,6 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import application.Main;
 import application.model.User;
 import application.model.UserHolder;
 
@@ -83,7 +80,6 @@ public class ChatRoomController implements Initializable {
 
 	@FXML
 	void openSettingsPane(MouseEvent event) {
-		System.out.println("open settings button clicked");
 		// TODO show settings pane or dialog box
 
 		// slide animation
