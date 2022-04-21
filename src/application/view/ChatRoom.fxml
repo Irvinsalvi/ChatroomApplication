@@ -4,6 +4,7 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
@@ -117,9 +118,9 @@
 	<AnchorPane fx:id="pane1" prefHeight="200.0" prefWidth="1127.0" style="-fx-background-color: rgba(0,0,0,0);" visible="false" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
 	<AnchorPane fx:id="pane2" layoutX="106.0" layoutY="10.0" prefHeight="723.0" prefWidth="260.0" AnchorPane.leftAnchor="106.0" AnchorPane.topAnchor="0.0">
 	  <children>
-	     <VBox prefHeight="724.0" prefWidth="254.0" style="-fx-background-color: rgba(0,0,0,0.6);" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="-6.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="0.0">
+	     <VBox prefHeight="724.0" prefWidth="254.0" style="-fx-background-color: rgba(0,0,0,0.8);" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="-6.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="0.0">
 	        <children>
-	           <Button fx:id="avatarBtn" mnemonicParsing="false" onMouseClicked="#openChangeAvatar" prefHeight="50.0" prefWidth="200.0" text="Change Avatar">
+	           <Button fx:id="avatarBtn" mnemonicParsing="false" onMouseClicked="#openChangeAvatar" prefHeight="50.0" prefWidth="200.0" style="-fx-background-radius: 50px;" text="Change Avatar">
 	              <VBox.margin>
 	                 <Insets left="30.0" top="200.0" />
 	              </VBox.margin>
@@ -127,7 +128,7 @@
 	                 <Cursor fx:constant="HAND" />
 	              </cursor>
 	           </Button>
-	           <Button fx:id="usernameBtn" mnemonicParsing="false" onMouseClicked="#openChangeUsername" prefHeight="50.0" prefWidth="200.0" text="Change Username">
+	           <Button fx:id="usernameBtn" mnemonicParsing="false" onMouseClicked="#openChangeUsername" prefHeight="50.0" prefWidth="200.0" style="-fx-background-radius: 50px;" text="Change Username">
 	              <VBox.margin>
 	                 <Insets left="30.0" top="75.0" />
 	              </VBox.margin>
@@ -135,7 +136,7 @@
 	                 <Cursor fx:constant="HAND" />
 	              </cursor>
 	           </Button>
-	           <Button fx:id="passwordBtn" mnemonicParsing="false" onMouseClicked="#openChangePassword" prefHeight="50.0" prefWidth="200.0" text="Change Password">
+	           <Button id="passwordBtn" fx:id="passwordBtn" mnemonicParsing="false" onMouseClicked="#openChangePassword" prefHeight="50.0" prefWidth="200.0" style="-fx-background-radius: 50px;" stylesheets="@../util/css/application.css" text="Change Password">
 	              <VBox.margin>
 	                 <Insets left="30.0" top="75.0" />
 	              </VBox.margin>
@@ -181,7 +182,7 @@
    </VBox>
    <AnchorPane fx:id="settingsPane" layoutX="354.0" prefHeight="682.0" prefWidth="733.0" visible="false">
       <children>
-         <VBox fx:id="avatarBox" alignment="CENTER" prefHeight="724.0" prefWidth="773.0" style="-fx-background-color: rgba(0,0,0,0.9);" visible="false">
+         <VBox fx:id="avatarBox" alignment="CENTER" prefHeight="724.0" prefWidth="773.0" style="-fx-background-color: rgba(0,0,0,0.8);" visible="false">
             <children>
                <Label opacity="0.78" text="Change Avatar" textFill="#76598d">
                   <font>
@@ -208,46 +209,6 @@
                            <Image url="@../util/images/avatar-0.png" />
                         </image>
                      </ImageView>
-                     <ImageView fitHeight="120.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-                        <image>
-                           <Image url="@../util/images/avatar-8.png" />
-                        </image>
-                     </ImageView>
-                     <ImageView fitHeight="120.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
-                        <image>
-                           <Image url="@../util/images/avatar-5.png" />
-                        </image>
-                     </ImageView>
-                     <ImageView fitHeight="120.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
-                        <image>
-                           <Image url="@../util/images/avatar-7.png" />
-                        </image>
-                     </ImageView>
-                     <ImageView fitHeight="120.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                        <image>
-                           <Image url="@../util/images/avatar-6.png" />
-                        </image>
-                     </ImageView>
-                     <ImageView fitHeight="120.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                        <image>
-                           <Image url="@../util/images/avatar-4.png" />
-                        </image>
-                     </ImageView>
-                     <ImageView fitHeight="127.0" fitWidth="121.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4">
-                        <image>
-                           <Image url="@../util/images/avatar-3.png" />
-                        </image>
-                     </ImageView>
-                     <ImageView fitHeight="120.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                        <image>
-                           <Image url="@../util/images/avatar-1.png" />
-                        </image>
-                     </ImageView>
-                     <ImageView fitHeight="120.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="4">
-                        <image>
-                           <Image url="@../util/images/avatar-2.png" />
-                        </image>
-                     </ImageView>
                      <RadioButton fx:id="button0" mnemonicParsing="false" selected="true" GridPane.rowIndex="1">
                      	<toggleGroup>
                  			<ToggleGroup fx:id="picture" />
@@ -260,19 +221,59 @@
                      <RadioButton fx:id="button6" mnemonicParsing="false" toggleGroup="$picture" GridPane.rowIndex="5" />
                      <RadioButton fx:id="button7" mnemonicParsing="false" toggleGroup="$picture" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                      <RadioButton fx:id="button8" mnemonicParsing="false" toggleGroup="$picture" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                     <ImageView fitHeight="120.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                        <image>
+                           <Image url="@../util/images/avatar-1.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView fitHeight="120.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+                        <image>
+                           <Image url="@../util/images/avatar-2.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView fitHeight="127.0" fitWidth="121.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
+                        <image>
+                           <Image url="@../util/images/avatar-3.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView fitHeight="120.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <image>
+                           <Image url="@../util/images/avatar-4.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView fitHeight="120.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                        <image>
+                           <Image url="@../util/images/avatar-5.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView fitHeight="120.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4">
+                        <image>
+                           <Image url="@../util/images/avatar-6.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView fitHeight="120.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <image>
+                           <Image url="@../util/images/avatar-7.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView fitHeight="120.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                        <image>
+                           <Image url="@../util/images/avatar-8.png" />
+                        </image>
+                     </ImageView>
                   </children>
                   <VBox.margin>
                      <Insets left="155.0" top="30.0" />
                   </VBox.margin>
                </GridPane>
-               <Button fx:id="avatarBtn1" mnemonicParsing="false" onMouseClicked="#openChangeAvatar" prefHeight="50.0" prefWidth="200.0" text="Save and Close">
+               <Button fx:id="updatePicBtn" mnemonicParsing="false" onMouseClicked="#updateAvatar" prefHeight="50.0" prefWidth="200.0" text="Save and Close">
                   <cursor>
                      <Cursor fx:constant="HAND" />
                   </cursor>
                </Button>
             </children>
          </VBox>
-         <VBox fx:id="usernameBox" alignment="TOP_CENTER" prefHeight="724.0" prefWidth="773.0" style="-fx-background-color: rgba(0,0,0,0.9);" visible="false">
+         <VBox fx:id="usernameBox" alignment="TOP_CENTER" prefHeight="724.0" prefWidth="773.0" style="-fx-background-color: rgba(0,0,0,0.8);" visible="false">
             <children>
                <Label opacity="0.78" text="Change Username" textFill="#76598d">
                   <font>
@@ -289,7 +290,7 @@
                            <Font size="24.0" />
                         </font>
                         <padding>
-                           <Insets bottom="-10.0" left="130.0" />
+                           <Insets bottom="-10.0" left="140.0" />
                         </padding>
                         <HBox.margin>
                            <Insets left="1.0" />
@@ -308,12 +309,28 @@
                      <Insets top="150.0" />
                   </VBox.margin>
                </HBox>
-               <TextField maxWidth="500.0" promptText="New Username">
+               <TextField fx:id="changeUsername" maxWidth="500.0" promptText="New Username" style="-fx-background-radius: 50px;">
                   <font>
                      <Font size="17.0" />
                   </font>
                </TextField>
-               <Button fx:id="usernameBtn1" mnemonicParsing="false" onMouseClicked="#openChangeUsername" prefHeight="50.0" prefWidth="200.0" text="Save and Close">
+               <Label fx:id="nameError" textFill="#c31717">
+                  <font>
+                     <Font size="20.0" />
+                  </font>
+                  <VBox.margin>
+                     <Insets />
+                  </VBox.margin>
+               </Label>
+               <Button fx:id="updateNameBtn" mnemonicParsing="false" onMouseClicked="#updateUsername" prefHeight="50.0" prefWidth="200.0" style="-fx-background-radius: 50px;" text="Save">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
+                  <VBox.margin>
+                     <Insets top="15.0" />
+                  </VBox.margin>
+               </Button>
+               <Button fx:id="usernameBtn1" mnemonicParsing="false" onMouseClicked="#openChangeUsername" prefHeight="50.0" prefWidth="200.0" style="-fx-background-radius: 50px;" text="Close">
                   <cursor>
                      <Cursor fx:constant="HAND" />
                   </cursor>
@@ -323,7 +340,7 @@
                </Button>
             </children>
          </VBox>
-         <VBox fx:id="passwordBox" alignment="TOP_CENTER" prefHeight="723.0" prefWidth="773.0" style="-fx-background-color: rgba(0,0,0,0.9);" visible="false">
+         <VBox fx:id="passwordBox" alignment="TOP_CENTER" prefHeight="723.0" prefWidth="773.0" style="-fx-background-color: rgba(0,0,0,0.8);" visible="false">
             <children>
                <Label opacity="0.78" text="Change Password" textFill="#76598d">
                   <font>
@@ -333,25 +350,47 @@
                      <Insets top="20.0" />
                   </VBox.margin>
                </Label>
-               <TextField maxWidth="300.0" promptText="Current Password">
+               <Label fx:id="passOk" textFill="#76598d">
                   <VBox.margin>
-                     <Insets bottom="10.0" top="150.0" />
+                     <Insets top="140.0" />
                   </VBox.margin>
-               </TextField>
-               <TextField maxWidth="300.0" promptText="New Password">
+                  <font>
+                     <Font name="System Bold" size="28.0" />
+                  </font>
+               </Label>
+               <PasswordField fx:id="currPass" maxWidth="300.0" promptText="Current Password" style="-fx-background-radius: 50px;">
                   <VBox.margin>
-                     <Insets bottom="10.0" />
+                     <Insets bottom="10.0" top="15.0" />
                   </VBox.margin>
-               </TextField>
-               <TextField maxWidth="300.0" promptText="Confirm New Password">
+               </PasswordField>
+               <Label fx:id="currPassError" textFill="#c31717">
+                  <font>
+                     <Font size="20.0" />
+                  </font>
+               </Label>
+               <PasswordField fx:id="newPass" maxWidth="300.0" promptText="New Password" style="-fx-background-radius: 50px;" />
+               <PasswordField fx:id="confPass" maxWidth="300.0" promptText="Confirm New Password" style="-fx-background-radius: 50px;">
                   <VBox.margin>
-                     <Insets bottom="10.0" />
+                     <Insets top="15.0" />
                   </VBox.margin>
-               </TextField>
-               <Button fx:id="passwordBtn1" mnemonicParsing="false" onMouseClicked="#openChangePassword" prefHeight="50.0" prefWidth="200.0" text="Save and Close">
+               </PasswordField>
+               <Label fx:id="passError" textFill="#c31717">
+                  <font>
+                     <Font size="20.0" />
+                  </font>
+               </Label>
+               <Button fx:id="updatePassBtn" mnemonicParsing="false" onMouseClicked="#updatePassword" prefHeight="50.0" prefWidth="200.0" style="-fx-background-radius: 20px;" text="Save">
                   <cursor>
                      <Cursor fx:constant="HAND" />
                   </cursor>
+               </Button>
+               <Button fx:id="passwordBtn1" mnemonicParsing="false" onMouseClicked="#openChangePassword" prefHeight="50.0" prefWidth="200.0" style="-fx-background-radius: 20px;" text="Close">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
+                  <VBox.margin>
+                     <Insets top="15.0" />
+                  </VBox.margin>
                </Button>
             </children>
          </VBox>
