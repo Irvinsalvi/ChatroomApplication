@@ -88,42 +88,42 @@
                   <Image url="@../util/images/avatar-0.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="120.0" fitWidth="160.0" layoutX="800.0" layoutY="525.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="120.0" fitWidth="160.0" layoutX="800.0" layoutY="162.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../util/images/avatar-1.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="120.0" fitWidth="160.0" layoutX="965.0" layoutY="525.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="120.0" fitWidth="160.0" layoutX="965.0" layoutY="162.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../util/images/avatar-2.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="120.0" fitWidth="160.0" layoutX="635.0" layoutY="525.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="120.0" fitWidth="160.0" layoutX="635.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../util/images/avatar-3.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="120.0" fitWidth="160.0" layoutX="965.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="120.0" fitWidth="160.0" layoutX="800.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../util/images/avatar-4.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="120.0" fitWidth="160.0" layoutX="965.0" layoutY="162.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="120.0" fitWidth="160.0" layoutX="965.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../util/images/avatar-5.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="120.0" fitWidth="160.0" layoutX="800.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="120.0" fitWidth="160.0" layoutX="635.0" layoutY="525.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../util/images/avatar-6.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="120.0" fitWidth="160.0" layoutX="635.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="120.0" fitWidth="160.0" layoutX="800.0" layoutY="525.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../util/images/avatar-7.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="120.0" fitWidth="160.0" layoutX="800.0" layoutY="162.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="120.0" fitWidth="160.0" layoutX="965.0" layoutY="525.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../util/images/avatar-8.png" />
                </image>
