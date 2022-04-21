@@ -3,8 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -42,21 +42,11 @@
 					</AnchorPane>
 				</content>
 			</ScrollPane>
-			<TextArea id="messageField" fx:id="messageField" layoutX="77.0" layoutY="583.0" prefHeight="50.0" prefWidth="587.0" promptText="Type your message...." />
-			<Button fx:id="btnSend" layoutX="677.0" layoutY="589.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="38.0" prefWidth="36.0">
+			<TextArea id="messageField" fx:id="messageField" layoutX="77.0" layoutY="618.0" prefHeight="50.0" prefWidth="587.0" promptText="Type your message...." />
+			<Button fx:id="btnSend" layoutX="677.0" layoutY="625.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="38.0" prefWidth="36.0">
 				<cursor>
 					<Cursor fx:constant="HAND" />
 				</cursor>
-			</Button>
-			<Button fx:id="emojiBtn" graphicTextGap="0.0" layoutX="316.0" layoutY="640.0" mnemonicParsing="false" onAction="#addEmoji" prefHeight="30.0" prefWidth="55.0" text="😊">
-				<font>
-					<Font size="18.0" />
-				</font>
-			</Button>
-			<Button fx:id="gifBtn" graphicTextGap="0.0" layoutX="384.0" layoutY="639.0" mnemonicParsing="false" onAction="#addGIF" prefHeight="30.0" prefWidth="55.0" text="GIF">
-				<font>
-					<Font size="18.0" />
-				</font>
 			</Button>
 		</children>
 	</AnchorPane>

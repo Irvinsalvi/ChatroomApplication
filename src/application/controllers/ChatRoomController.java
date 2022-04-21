@@ -116,19 +116,6 @@ public class ChatRoomController implements Initializable {
 		}
 	}
 
-	@FXML
-	void addEmoji(ActionEvent event) {
-		System.out.println("add emoji button clicked");
-		// TODO add emoji to message field
-
-	}
-
-	@FXML
-	void addGIF(ActionEvent event) {
-		System.out.println("add GIF button clicked");
-		// TODO add GIF to message field
-	}
-
 	public void displayMessage(String username, String message, String timestamp) throws MalformedURLException {
 
 		HBox msgHBox = new HBox();
