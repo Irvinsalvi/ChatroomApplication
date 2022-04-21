@@ -152,8 +152,8 @@ public class ChatRoomController implements Initializable {
 		TextArea msg = new TextArea(message);
 		msg.setEditable(false);
 		msg.setWrapText(true);
-		msg.setPrefWidth(250);
-		msg.setPrefHeight(50);
+		msg.setPrefWidth(350);
+		msg.setPrefHeight(75);
 		msg.setId("outgoingMsgBox");
 
 		Label time = new Label(timestamp);
