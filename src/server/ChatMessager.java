@@ -122,6 +122,7 @@ public class ChatMessager {
 		String[] split = response.split(";");
 		for (int x = 0; x < Table.length; x++) {
 			Table[x] = split[x].split(",");
+			Table[x][1] = FromB64String(Table[x][1]);
 			Table[x][0] = FromB64String(Table[x][0]);
 		}
 		return Table;
