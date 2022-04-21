@@ -24,7 +24,7 @@ public class Main extends Application {
 			String css = this.getClass().getResource("util/css/application.css").toExternalForm(); //just a string which has the path to the css
 			scene.getStylesheets().add(css); //links css file to the login scene fxml
 			
-			primaryStage.setTitle("Chat Room"); //sets the title of the whole window
+			primaryStage.setTitle("ChatVerse"); //sets the title of the whole window
 			primaryStage.setScene(scene); //sets the scene that you want to the window
 			primaryStage.show(); //shows the window
 		} catch(Exception e) {
