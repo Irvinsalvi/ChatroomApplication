@@ -25,7 +25,6 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import server.ChatMessager;
-import server.activeUsers;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
@@ -37,7 +36,6 @@ import application.model.UserHolder;
 public class ChatRoomController implements Initializable {
 	SceneController switchScene = new SceneController();
 	User u;
-	activeUsers onlineUsers = new activeUsers();
 	ChatMessager chatmessager;
 
 	String name = "";
