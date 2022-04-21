@@ -92,7 +92,7 @@ public class CreateAccountController {
 			u = new User(username.getText(), password.getText(), currentPicture, true);	
 			UserHolder holder = (UserHolder) UserHolder.getInstance();
 			holder.setUser(u);
-			switchScene.chatRoomScene(event);
+			switchScene.loginFormScene(event);
 		}
 		checkTextFields();
 	}
