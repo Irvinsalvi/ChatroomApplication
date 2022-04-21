@@ -79,6 +79,7 @@ public class ChatRoomController implements Initializable {
 	@FXML
 	void openSettingsPane(MouseEvent event) {
 		// TODO show settings pane or dialog box
+		// testing testing
 
 		// slide animation
 		TranslateTransition slide = new TranslateTransition();
