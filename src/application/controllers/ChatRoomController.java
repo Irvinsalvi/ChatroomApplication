@@ -28,9 +28,16 @@ import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import server.ChatMessager;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import application.model.User;
 import application.model.UserHolder;
@@ -48,7 +55,8 @@ public class ChatRoomController implements Initializable {
 	private TextArea messageField;
 
 	@FXML
-	private Button btnSend, emojiBtn, gifBtn, btn, avatarBtn, usernameBtn, passwordBtn, updateNameBtn, updatePassBtn, updatePicBtn;
+	private Button btnSend, emojiBtn, gifBtn, btn, avatarBtn, usernameBtn, passwordBtn, updateNameBtn, updatePassBtn,
+			updatePicBtn;
 
 	@FXML
 	private AnchorPane svgPane, chatPane, rootPane, pane1, pane2, settingsPane;
@@ -75,7 +83,7 @@ public class ChatRoomController implements Initializable {
 	private PasswordField currPass, newPass, confPass;
 
 	@FXML
-	private RadioButton button0, button1, button2,  button3, button4, button5, button6, button7, button8;
+	private RadioButton button0, button1, button2, button3, button4, button5, button6, button7, button8;
 
 	@FXML
 	void leaveChatRoom(MouseEvent event) throws IOException, URISyntaxException, InterruptedException {
@@ -94,7 +102,7 @@ public class ChatRoomController implements Initializable {
 		slide.setDuration(Duration.millis(350));
 		slide.setNode(pane2);
 		slide.setOnFinished(event -> settingsBtn1.setDisable(false));
-		
+
 		// Open settings pane
 		if (!pane1.isVisible()) {
 			pane1.setVisible(true);
@@ -175,163 +183,117 @@ public class ChatRoomController implements Initializable {
 	void openChangeUsername(MouseEvent event) {
 		slide(usernameBox, usernameBtn);
 	}
-	
+
 	@FXML
-    void updateUsername(MouseEvent event) {
-    	//check if username field is empty
-    	if (!changeUsername.getText().isEmpty()){
-    		
-    		//update username
-    		name = changeUsername.getText();
-	   		try {
-	   			chatmessager.UpdateName(name);
-		    	u.setUsername(name);
-		    	loggedInAsName.setText(name);
-		    	currentUser.setText(name);
-		    	changeUsername.setText("");
-	   		}
-	    	catch (IOException | URISyntaxException| InterruptedException e) {
-	    		nameError.setText("Server connection error, new username not sent");
-	    	}
-    	}
-    	
-    	else {
-    		nameError.setText("Username field must not be blank!");
-    	}
-    }
+	void updateUsername(MouseEvent event) {
+		// check if username field is empty
+		if (!changeUsername.getText().isEmpty()) {
 
-    @FXML
-    void updatePassword(MouseEvent event) {
-    	 //check whether current password was entered
-    	if (!currPass.getText().isEmpty()) {
-    		currPassError.setText("");
-    		
-    		//check if current password is correct
-	    	if (u.getPassword().equals(currPass.getText().toString())) {
-	    		currPassError.setText("");
-	    		
-	    		//check if new password and confirm password are blank
-		    	if (!newPass.getText().isEmpty() && !confPass.getText().isEmpty()) {
-		    		passError.setText("");
-		    		
-		    		//check if new pass and confirm pass match
-		    		if(newPass.getText().toString().equals(confPass.getText().toString())) {
-		    			passError.setText("");
-		    			
-		    			//update password
-		    			try {
-		    				chatmessager.UpdatePassword(newPass.getText());
-		    				u.setPassword(newPass.getText());
-		    				passOk.setText("Password Change Successful");
-		    				currPass.setText("");
-		    				newPass.setText("");
-		    				confPass.setText("");
-		    			}
-		    			catch (IOException | URISyntaxException| InterruptedException e){
-		    				passError.setText("Server Connection error, password not updated");
-		    			}
-		    		}
-		    		else {
-		    			passError.setText("Passwords do not match!");
-		    		}
-		    	}
-		    	else {
-		    		passError.setText("Please fill out both fields!");
-		    	}
-	    	}
-	    	else {
-	    		currPassError.setText("Incorrect Password");
-	    	}
-    	}
-    	else {
-    		currPassError.setText("Required");
-    	}
-    }
+			// update username
+			name = changeUsername.getText();
+			try {
+				chatmessager.UpdateName(name);
+				u.setUsername(name);
+				loggedInAsName.setText(name);
+				currentUser.setText(name);
+				changeUsername.setText("");
+			} catch (IOException | URISyntaxException | InterruptedException e) {
+				nameError.setText("Server connection error, new username not sent");
+			}
+		}
 
+		else {
+			nameError.setText("Username field must not be blank!");
+		}
+	}
 
-    @FXML
-    void updateAvatar(MouseEvent event){
-    	int newPic = 0;
+	@FXML
+	void updatePassword(MouseEvent event) {
+		// check whether current password was entered
+		if (!currPass.getText().isEmpty()) {
+			currPassError.setText("");
 
-		if(button0.isSelected() == true) {
+			// check if current password is correct
+			if (u.getPassword().equals(currPass.getText().toString())) {
+				currPassError.setText("");
+
+				// check if new password and confirm password are blank
+				if (!newPass.getText().isEmpty() && !confPass.getText().isEmpty()) {
+					passError.setText("");
+
+					// check if new pass and confirm pass match
+					if (newPass.getText().toString().equals(confPass.getText().toString())) {
+						passError.setText("");
+
+						// update password
+						try {
+							chatmessager.UpdatePassword(newPass.getText());
+							u.setPassword(newPass.getText());
+							passOk.setText("Password Change Successful");
+							currPass.setText("");
+							newPass.setText("");
+							confPass.setText("");
+						} catch (IOException | URISyntaxException | InterruptedException e) {
+							passError.setText("Server Connection error, password not updated");
+						}
+					} else {
+						passError.setText("Passwords do not match!");
+					}
+				} else {
+					passError.setText("Please fill out both fields!");
+				}
+			} else {
+				currPassError.setText("Incorrect Password");
+			}
+		} else {
+			currPassError.setText("Required");
+		}
+	}
+
+	@FXML
+	void updateAvatar(MouseEvent event) {
+		int newPic = 0;
+
+		if (button0.isSelected() == true) {
 			newPic = 0;
 		}
-		if(button1.isSelected() == true) {
+		if (button1.isSelected() == true) {
 			newPic = 1;
 		}
-		if(button2.isSelected() == true) {
+		if (button2.isSelected() == true) {
 			newPic = 2;
 		}
-		if(button3.isSelected() == true) {
+		if (button3.isSelected() == true) {
 			newPic = 3;
 		}
-		if(button4.isSelected() == true) {
+		if (button4.isSelected() == true) {
 			newPic = 4;
 		}
-		if(button5.isSelected() == true) {
+		if (button5.isSelected() == true) {
 			newPic = 5;
 		}
-		if(button6.isSelected() == true) {
+		if (button6.isSelected() == true) {
 			newPic = 6;
 		}
-		if(button7.isSelected() == true) {
+		if (button7.isSelected() == true) {
 			newPic = 7;
 		}
-		if(button8.isSelected() == true) {
+		if (button8.isSelected() == true) {
 			newPic = 8;
 		}
 
 		try {
 			chatmessager.UpdateAvatar(newPic);
-		}
-		catch (IOException | URISyntaxException| InterruptedException e){
+		} catch (IOException | URISyntaxException | InterruptedException e) {
 			System.out.println("error");
 		}
 		slide(avatarBox, avatarBtn);
-    }
+	}
 
-    // slide animations for settings tabs
- 	public void slide(VBox box, Button  btn) {
- 		
- 		//reset labels on transitions
- 		passOk.setText("");
- 		passError.setText("");
- 		nameError.setText("");
- 		currPassError.setText("");
- 		currPass.setText("");
- 		newPass.setText("");
- 		confPass.setText("");
- 		changeUsername.setText("");
- 		
- 		//disable button during animation
- 		btn.setDisable(true);
- 		
- 		TranslateTransition slide = new TranslateTransition();
- 		slide.setDuration(Duration.millis(350));
- 		slide.setNode(box);
- 		
- 		//set opening animation, close other panes
- 		if (!box.isVisible()) {
- 			slide.setOnFinished(event -> btn.setDisable(false));
- 			closeAll(0);
- 			settingsPane.setVisible(true);
- 			box.setVisible(true);
- 			slide.setByY(1000);
- 			slide.play();
- 		} 
- 		
- 		//set closing animations
- 		else {
- 			slide.setNode(box);
- 			slide.setByY(-1000);
- 			slide.setOnFinished(event -> {btn.setDisable(false);box.setVisible(false);settingsPane.setVisible(false);});
- 			slide.play();
- 		}
- 	}
+	// slide animations for settings tabs
+	public void slide(VBox box, Button btn) {
 
-	public void closeAll(int type) {
-		
-		//reset labels on transition
+		// reset labels on transitions
 		passOk.setText("");
 		passError.setText("");
 		nameError.setText("");
@@ -340,20 +302,77 @@ public class ChatRoomController implements Initializable {
 		newPass.setText("");
 		confPass.setText("");
 		changeUsername.setText("");
-		
-		//set close animation, close any open settings panes
+
+		// disable button during animation
+		btn.setDisable(true);
+
+		TranslateTransition slide = new TranslateTransition();
+		slide.setDuration(Duration.millis(350));
+		slide.setNode(box);
+
+		// set opening animation, close other panes
+		if (!box.isVisible()) {
+			slide.setOnFinished(event -> btn.setDisable(false));
+			closeAll(0);
+			settingsPane.setVisible(true);
+			box.setVisible(true);
+			slide.setByY(1000);
+			slide.play();
+		}
+
+		// set closing animations
+		else {
+			slide.setNode(box);
+			slide.setByY(-1000);
+			slide.setOnFinished(event -> {
+				btn.setDisable(false);
+				box.setVisible(false);
+				settingsPane.setVisible(false);
+			});
+			slide.play();
+		}
+	}
+
+	public void closeAll(int type) {
+
+		// reset labels on transition
+		passOk.setText("");
+		passError.setText("");
+		nameError.setText("");
+		currPassError.setText("");
+		currPass.setText("");
+		newPass.setText("");
+		confPass.setText("");
+		changeUsername.setText("");
+
+		// set close animation, close any open settings panes
 		TranslateTransition closeAll = new TranslateTransition();
 		closeAll.setDuration(Duration.millis(350));
 		if (settingsPane.isVisible()) {
 			if (avatarBox.isVisible()) {
 				closeAll.setNode(avatarBox);
-				closeAll.setOnFinished(event -> {avatarBox.setVisible(false); if(type == 1) {settingsPane.setVisible(false);}});
+				closeAll.setOnFinished(event -> {
+					avatarBox.setVisible(false);
+					if (type == 1) {
+						settingsPane.setVisible(false);
+					}
+				});
 			} else if (usernameBox.isVisible()) {
 				closeAll.setNode(usernameBox);
-				closeAll.setOnFinished(event -> {usernameBox.setVisible(false); if(type == 1) {settingsPane.setVisible(false);}});
+				closeAll.setOnFinished(event -> {
+					usernameBox.setVisible(false);
+					if (type == 1) {
+						settingsPane.setVisible(false);
+					}
+				});
 			} else if (passwordBox.isVisible()) {
 				closeAll.setNode(passwordBox);
-				closeAll.setOnFinished(event -> {passwordBox.setVisible(false); if(type == 1) {settingsPane.setVisible(false);}});
+				closeAll.setOnFinished(event -> {
+					passwordBox.setVisible(false);
+					if (type == 1) {
+						settingsPane.setVisible(false);
+					}
+				});
 			}
 		}
 		closeAll.setByY(-1000);
@@ -399,7 +418,36 @@ public class ChatRoomController implements Initializable {
 		setPwPane.setNode(passwordBox);
 		setPwPane.play();
 
-		// timer runs every 2 seconds
+		List<String[]> newMessages = Collections.synchronizedList(new ArrayList<String[]>());
+		List<String[]> usersActive = Collections.synchronizedList(new ArrayList<String[]>());
+
+		ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
+		exec.scheduleAtFixedRate(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					String[][] veryNewMessages = chatmessager.GetComments();
+					synchronized (newMessages) {
+						newMessages.addAll(Arrays.asList(veryNewMessages));
+					}
+
+				} catch (IOException | URISyntaxException | InterruptedException e1) {
+					e1.printStackTrace();
+				}
+
+				try {
+					String[][] veryUsersActive = chatmessager.GetActive();
+					synchronized (usersActive) {
+						usersActive.clear();
+						for (String[] s : veryUsersActive)
+							usersActive.add(s);
+					}
+				} catch (IOException | InterruptedException | URISyntaxException e) {
+					e.printStackTrace();
+				}
+			}
+		}, 0, 2, TimeUnit.SECONDS);
+
 		Timer timer = new Timer();
 		timer.scheduleAtFixedRate(new TimerTask() {
 			@Override
@@ -409,22 +457,21 @@ public class ChatRoomController implements Initializable {
 					public void run() {
 						// gets all messages not seen by this instance of chatter
 						// and displays them in messages bubbles
+
 						try {
-							for (String[] s : chatmessager.GetComments()) {
+							for (String[] s : newMessages)
 								displayMessage(s[0], s[1], s[2]);
-							}
-						} catch (IOException | URISyntaxException | InterruptedException e1) {
+							newMessages.clear();
+							
+						} catch (MalformedURLException e1) {
 							e1.printStackTrace();
 						}
 
 						// updates active user list
 						try {
 							activeUserBox.getChildren().clear();// clears old active user list
-
-							String[][] usersActive = chatmessager.GetActive();
-
 							for (String[] strings : usersActive) {
-								if(!(u.getUsername().equals(strings[0]))) {//all active users except this user
+								if (!(u.getUsername().equals(strings[0]))) {// all active users except this user
 									displayUsers(strings[0], strings[1]);
 								}
 							}
@@ -435,7 +482,6 @@ public class ChatRoomController implements Initializable {
 				});
 			}
 		}, 0, 2000);
-
 	}
 
 	/*
