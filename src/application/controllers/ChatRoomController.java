@@ -10,10 +10,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.PasswordField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -46,7 +48,7 @@ public class ChatRoomController implements Initializable {
 	private TextArea messageField;
 
 	@FXML
-	private Button btnSend, emojiBtn, gifBtn, btn, avatarBtn, usernameBtn, passwordBtn;
+	private Button btnSend, emojiBtn, gifBtn, btn, avatarBtn, usernameBtn, passwordBtn, updateNameBtn, updatePassBtn, updatePicBtn;
 
 	@FXML
 	private AnchorPane svgPane, chatPane, rootPane, pane1, pane2, settingsPane;
@@ -61,13 +63,19 @@ public class ChatRoomController implements Initializable {
 	private HBox iconBox;
 
 	@FXML
-	private ImageView logoutBtn, settingsBtn;
+	private ImageView logoutBtn, settingsBtn1;
 
 	@FXML
-	private Label loggedInAsName, currentUser;
+	private Label loggedInAsName, currentUser, nameError, currPassError, passError, passOk;
 
 	@FXML
-	private TextField messageBubble;
+	private TextField messageBubble, changeUsername;
+
+	@FXML
+	private PasswordField currPass, newPass, confPass;
+
+	@FXML
+	private RadioButton button0, button1, button2,  button3, button4, button5, button6, button7, button8;
 
 	@FXML
 	void leaveChatRoom(MouseEvent event) throws IOException, URISyntaxException, InterruptedException {
@@ -77,15 +85,16 @@ public class ChatRoomController implements Initializable {
 	}
 
 	@FXML
-	void openSettingsPane(MouseEvent event) {
+	void openSettingsPane(MouseEvent click) {
 		// TODO show settings pane or dialog box
-		// testing testing
 
 		// slide animation
+		settingsBtn1.setDisable(true);
 		TranslateTransition slide = new TranslateTransition();
 		slide.setDuration(Duration.millis(350));
 		slide.setNode(pane2);
-
+		slide.setOnFinished(event -> settingsBtn1.setDisable(false));
+		
 		// Open settings pane
 		if (!pane1.isVisible()) {
 			pane1.setVisible(true);
@@ -93,14 +102,12 @@ public class ChatRoomController implements Initializable {
 			slide.play();
 		}
 
-		// close settings pane
+		// close settings panes
 		else {
 			pane1.setVisible(false);
 			slide.setByY(-1000);
 			slide.play();
-
-			// close all open settings tabs
-			closeAll();
+			closeAll(1);
 		}
 	}
 
@@ -156,59 +163,198 @@ public class ChatRoomController implements Initializable {
 
 	@FXML
 	void openChangeAvatar(MouseEvent event) {
-		slide(avatarBox);
+		slide(avatarBox, avatarBtn);
 	}
 
 	@FXML
 	void openChangePassword(MouseEvent event) {
-		slide(passwordBox);
-
+		slide(passwordBox, passwordBtn);
 	}
 
 	@FXML
 	void openChangeUsername(MouseEvent event) {
-		slide(usernameBox);
-
+		slide(usernameBox, usernameBtn);
 	}
+	
+	@FXML
+    void updateUsername(MouseEvent event) {
+    	//check if username field is empty
+    	if (!changeUsername.getText().isEmpty()){
+    		
+    		//update username
+    		name = changeUsername.getText();
+	   		try {
+	   			chatmessager.UpdateName(name);
+		    	u.setUsername(name);
+		    	loggedInAsName.setText(name);
+		    	currentUser.setText(name);
+		    	changeUsername.setText("");
+	   		}
+	    	catch (IOException | URISyntaxException| InterruptedException e) {
+	    		nameError.setText("Server connection error, new username not sent");
+	    	}
+    	}
+    	
+    	else {
+    		nameError.setText("Username field must not be blank!");
+    	}
+    }
 
-	// slide animations for settings tabs
-	public void slide(VBox box) {
-		TranslateTransition slide = new TranslateTransition();
-		slide.setDuration(Duration.millis(350));
-		slide.setNode(box);
+    @FXML
+    void updatePassword(MouseEvent event) {
+    	 //check whether current password was entered
+    	if (!currPass.getText().isEmpty()) {
+    		currPassError.setText("");
+    		
+    		//check if current password is correct
+	    	if (u.getPassword().equals(currPass.getText().toString())) {
+	    		currPassError.setText("");
+	    		
+	    		//check if new password and confirm password are blank
+		    	if (!newPass.getText().isEmpty() && !confPass.getText().isEmpty()) {
+		    		passError.setText("");
+		    		
+		    		//check if new pass and confirm pass match
+		    		if(newPass.getText().toString().equals(confPass.getText().toString())) {
+		    			passError.setText("");
+		    			
+		    			//update password
+		    			try {
+		    				chatmessager.UpdatePassword(newPass.getText());
+		    				u.setPassword(newPass.getText());
+		    				passOk.setText("Password Change Successful");
+		    				currPass.setText("");
+		    				newPass.setText("");
+		    				confPass.setText("");
+		    			}
+		    			catch (IOException | URISyntaxException| InterruptedException e){
+		    				passError.setText("Server Connection error, password not updated");
+		    			}
+		    		}
+		    		else {
+		    			passError.setText("Passwords do not match!");
+		    		}
+		    	}
+		    	else {
+		    		passError.setText("Please fill out both fields!");
+		    	}
+	    	}
+	    	else {
+	    		currPassError.setText("Incorrect Password");
+	    	}
+    	}
+    	else {
+    		currPassError.setText("Required");
+    	}
+    }
 
-		if (!box.isVisible()) {
-			closeAll();
 
-			settingsPane.setVisible(true);
-			box.setVisible(true);
-			slide.setByY(1000);
-			slide.play();
-		} else {
-			slide.setNode(box);
-			slide.setByY(-1000);
-			slide.play();
-			box.setVisible(false);
-			settingsPane.setVisible(false);
+    @FXML
+    void updateAvatar(MouseEvent event){
+    	int newPic = 0;
+
+		if(button0.isSelected() == true) {
+			newPic = 0;
 		}
-	}
+		if(button1.isSelected() == true) {
+			newPic = 1;
+		}
+		if(button2.isSelected() == true) {
+			newPic = 2;
+		}
+		if(button3.isSelected() == true) {
+			newPic = 3;
+		}
+		if(button4.isSelected() == true) {
+			newPic = 4;
+		}
+		if(button5.isSelected() == true) {
+			newPic = 5;
+		}
+		if(button6.isSelected() == true) {
+			newPic = 6;
+		}
+		if(button7.isSelected() == true) {
+			newPic = 7;
+		}
+		if(button8.isSelected() == true) {
+			newPic = 8;
+		}
 
-	// closes all open settings tabs
-	public void closeAll() {
+		try {
+			chatmessager.UpdateAvatar(newPic);
+		}
+		catch (IOException | URISyntaxException| InterruptedException e){
+			System.out.println("error");
+		}
+		slide(avatarBox, avatarBtn);
+    }
+
+    // slide animations for settings tabs
+ 	public void slide(VBox box, Button  btn) {
+ 		
+ 		//reset labels on transitions
+ 		passOk.setText("");
+ 		passError.setText("");
+ 		nameError.setText("");
+ 		currPassError.setText("");
+ 		currPass.setText("");
+ 		newPass.setText("");
+ 		confPass.setText("");
+ 		changeUsername.setText("");
+ 		
+ 		//disable button during animation
+ 		btn.setDisable(true);
+ 		
+ 		TranslateTransition slide = new TranslateTransition();
+ 		slide.setDuration(Duration.millis(350));
+ 		slide.setNode(box);
+ 		
+ 		//set opening animation, close other panes
+ 		if (!box.isVisible()) {
+ 			slide.setOnFinished(event -> btn.setDisable(false));
+ 			closeAll(0);
+ 			settingsPane.setVisible(true);
+ 			box.setVisible(true);
+ 			slide.setByY(1000);
+ 			slide.play();
+ 		} 
+ 		
+ 		//set closing animations
+ 		else {
+ 			slide.setNode(box);
+ 			slide.setByY(-1000);
+ 			slide.setOnFinished(event -> {btn.setDisable(false);box.setVisible(false);settingsPane.setVisible(false);});
+ 			slide.play();
+ 		}
+ 	}
+
+	public void closeAll(int type) {
+		
+		//reset labels on transition
+		passOk.setText("");
+		passError.setText("");
+		nameError.setText("");
+		currPassError.setText("");
+		currPass.setText("");
+		newPass.setText("");
+		confPass.setText("");
+		changeUsername.setText("");
+		
+		//set close animation, close any open settings panes
 		TranslateTransition closeAll = new TranslateTransition();
 		closeAll.setDuration(Duration.millis(350));
 		if (settingsPane.isVisible()) {
 			if (avatarBox.isVisible()) {
 				closeAll.setNode(avatarBox);
-				avatarBox.setVisible(false);
+				closeAll.setOnFinished(event -> {avatarBox.setVisible(false); if(type == 1) {settingsPane.setVisible(false);}});
 			} else if (usernameBox.isVisible()) {
 				closeAll.setNode(usernameBox);
-				usernameBox.setVisible(false);
+				closeAll.setOnFinished(event -> {usernameBox.setVisible(false); if(type == 1) {settingsPane.setVisible(false);}});
 			} else if (passwordBox.isVisible()) {
 				closeAll.setNode(passwordBox);
-				passwordBox.setVisible(false);
+				closeAll.setOnFinished(event -> {passwordBox.setVisible(false); if(type == 1) {settingsPane.setVisible(false);}});
 			}
-			settingsPane.setVisible(false);
 		}
 		closeAll.setByY(-1000);
 		closeAll.play();
@@ -230,7 +376,7 @@ public class ChatRoomController implements Initializable {
 		// Settings Pane: move all off-screen
 		pane1.setVisible(false);
 		TranslateTransition slide = new TranslateTransition();
-		slide.setDuration(Duration.millis(350));
+		slide.setDuration(Duration.millis(1));
 		slide.setNode(pane2);
 		slide.setByY(-1000);
 		slide.play();
